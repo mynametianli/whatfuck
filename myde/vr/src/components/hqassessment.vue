@@ -9,11 +9,11 @@
         <mu-raised-button label="查询" class="l workaccount-button" :backgroundColor="bgcolor" @click = 'searchword'/>
         <mu-raised-button label="刷新" class="l workaccount-button" :backgroundColor="bgcolor" @click="reloadthis"/>
         <mu-raised-button label="导出为报表" class="l workaccount-button" :backgroundColor="bgcolor" @click="getexcel"/>
-        <div class="l income-status">
+        <!--<div class="l income-status">
           <mu-select-field v-model="status" label="账号状态" labelClass="search-title"  labelFocusClass="search-focus" @change="searchstatus">
             <mu-menu-item v-for="text,index in list" :key="index" :value="String(index)" :title="text" />
           </mu-select-field>
-        </div>
+        </div>-->
       </div>
       <div class="workaccount-tb" v-show="!showdetail">
         <mu-table :showCheckbox="isshow" class="workaccount-tbe">
@@ -25,9 +25,10 @@
           <mu-tbody>
             <mu-tr v-for="(tbm,index) in tbmsg" :key="index" :class="{redmark:!tbm.is_active}">
               <mu-td>{{tbm.work_name}}</mu-td>
-              <mu-td>{{tbm.level === '1' ? '工作室' : tbm.level === '2' ? '运营中心' : '分公司'}}</mu-td>
-              <mu-td>{{tbm.mobile}}</mu-td>
-              <mu-td>{{tbm.name}}</mu-td>
+              <mu-td>{{tbm.level == '1' ? '工作室' : tbm.level == '2' ? '运营中心' : '分公司'}}</mu-td>
+              <mu-td>{{tbm.wallet_mobile}}</mu-td>
+              <mu-td>{{tbm.join_date}}</mu-td>
+              <mu-td>{{tbm.score}}</mu-td>
               <mu-td>
                 <button class="bt" @click="opendetail(tbm)" :class="{redmark:!tbm.is_active}">查看</button>
               </mu-td>
@@ -36,12 +37,12 @@
                 <button class="bt" :class="{redmark:!tbm.is_active}" @click="operateopen('degrade',tbm)">降级</button>
                 <button class="bt" :class="{redmark:!tbm.is_active}" @click="operateopen('dissolve',tbm)">解散</button>
               </mu-td>
-              <mu-td>
-                <!--<button class="bt" @click="thisdetail(tbm)">详情</button>-->
+              <!--<mu-td>
+                <button class="bt" @click="thisdetail(tbm)">详情</button>
                 <button v-if="tbm.is_active" class="bt" @click="forbidden(tbm)">禁用</button>
                 <button v-if="!tbm.is_active" :class="{redmark:!tbm.is_active}" class="bt" @click="startuse(tbm)">启用</button>
                 <button @click="manageropen(tbm)" class="bt" :class="{redmark:!tbm.is_active}">更换管理员</button>
-              </mu-td>
+              </mu-td>-->
             </mu-tr>
           </mu-tbody>
         </mu-table>
@@ -90,12 +91,27 @@
     <div class="detail" v-if="showdetail">
       <div class="header">工作室业绩</div>
       <div class="dtback">
-        <mu-date-picker mode="landscape" hintText="开始日期" icon="today" label="开始日期" :maxDate="enddate" labelClass="search-title" v-model="startdate" class="l wid150 btmar"/>
-        <mu-date-picker mode="landscape" hintText="结束日期" icon="today" label="结束日期" :minDate="startdate"  labelClass="search-title" v-model="enddate" class="l wid150 btmar"/>
-        <mu-raised-button label="查询" class="l workaccount-button" :backgroundColor="bgcolor" @click = 'searchword'/>
+        <!--<mu-date-picker mode="landscape" hintText="开始日期" icon="today" label="开始日期" :maxDate="enddate" labelClass="search-title" v-model="startdate" class="l wid150 btmar"/>
+        <mu-date-picker mode="landscape" hintText="结束日期" icon="today" label="结束日期" :minDate="startdate"  labelClass="search-title" v-model="enddate" class="l wid150 btmar"/>-->
+        <mu-select-field v-model="month" label="月份选择" class="l wid150 btmar mm" @change="monthchange">
+          <mu-menu-item value="2017-01" title="2017-01"/>
+          <mu-menu-item value="2017-02" title="2017-02"/>
+          <mu-menu-item value="2017-03" title="2017-03"/>
+          <mu-menu-item value="2017-04" title="2017-04"/>
+          <mu-menu-item value="2017-05" title="2017-05"/>
+          <mu-menu-item value="2017-06" title="2017-06"/>
+          <mu-menu-item value="2017-07" title="2017-07"/>
+          <mu-menu-item value="2017-08" title="2017-08"/>
+          <mu-menu-item value="2017-09" title="2017-09"/>
+          <mu-menu-item value="2017-10" title="2017-10"/>
+          <mu-menu-item value="2017-11" title="2017-11"/>
+          <mu-menu-item value="2017-12" title="2017-12"/>
+        </mu-select-field>
+        <mu-raised-button label="查询" class="l workaccount-button" :backgroundColor="bgcolor" @click = 'searchmonth'/>
         <mu-raised-button label="返回" class="l workaccount-button" :backgroundColor="bgcolor" @click="getback"/>
         <div class="r detailall" >
-          {{(startdate ? startdate + '到' : '')+ (enddate ? enddate : '') }}累计业绩：{{monthall}}
+          当月业绩：{{nowmonth}}<br/>
+          <!--{{(startdate ? startdate + '到' : '')+ (enddate ? enddate : '') }}-->查询业绩：{{monthall}}
         </div>
       </div>
       <div class="addworkaccount_box l">
@@ -107,18 +123,15 @@
           </mu-thead>
           <mu-tbody>
             <mu-tr v-for="(tbm,index) in otbmsg" :key="index">
-              <mu-td class="dfhandle-td">{{tbm.user_info.work_name}}</mu-td>
-              <mu-td class="dfhandle-td">{{tbm.user_info.wallet_mobile}}</mu-td>
-              <mu-td class="dfhandle-td">{{JSON.parse(tbm.user_info.work_address.replace(/'/g,'"')).province + JSON.parse(tbm.user_info.work_address.replace(/'/g,'"')).city + JSON.parse(tbm.user_info.work_address.replace(/'/g,'"')).area}}</mu-td>
-              <mu-td class="dfhandle-td">{{tbm.status == 0 ? '未拨币' : '已拨币'}}</mu-td>
-              <mu-td>{{tbm.date}}</mu-td>
-              <mu-td>{{tbm.change_date}}</mu-td>
-              <mu-td class="dfhandle-td">{{tbm.vr9_count}}</mu-td>
+              <mu-td class="dfhandle-td">{{openname}}</mu-td>
+              <mu-td class="dfhandle-td">{{tbm.account}}</mu-td>
+              <mu-td class="dfhandle-td">{{tbm.date+'  '+tbm.time}}</mu-td>
+              <mu-td class="dfhandle-td">{{tbm.amount}}</mu-td>
             </mu-tr>
           </mu-tbody>
         </mu-table>
         <div class="workaccount-paging1" v-if="dtotal > 10">
-          <div class="showlists">总共{{dtotal}}条记录，当前为第{{dcrtpg}}页，显示第{{(dcrtpg - 1) * 10+ 1}}条到第{{dcrtpg * 10 > dtotal ? dtotal : dcrtpg * 10}}条记录</div>
+          <div class="showlists">总共{{dtotal}}条记录，当前为第{{dcurrent}}页，显示第{{(dcurrent - 1) * 10+ 1}}条到第{{dcurrent * 10 > dtotal ? dtotal : dcurrent * 10}}条记录</div>
           <mu-pagination :total="dtotal" :current="dcurrent" @pageChange="dhandleClick" class="workaccount-paging-box">
           </mu-pagination>
         </div>
@@ -140,23 +153,9 @@
         list:['全部','已禁用','已启用'],//select内容
         showdetail:false,//是否查看详情
         isshow:false,//table是否有checkbox
-        tbtitle:['工作室名称','工作室等级','总业绩','当月业绩','历史业绩','操作','管理'],//table表头
-        tbmsg:[
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,id:'5',level:'3'},
-                {work_name:'呵呵',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'2'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'1'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'2'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'1'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'2'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'2'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'3'},
-                {work_name:'呵呵',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'3'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'1'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'2'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:false,level:'3'},
-                {work_name:'哈哈',wallet_mobile:'13465464846',name:'xixi',mobile:'46454645131',is_active:true,level:'3'}
-               ],//table具体信息
-        total:15,//信息的总数量
+        tbtitle:['工作室名称','工作室等级','交易宝账号','加入时间','当月业绩','业绩查看','操作'],//table表头
+        tbmsg:[],//table具体信息
+        total:0,//信息的总数量
         current:1,//当前页数
         show:false,//弹出提示框
         msg:'',//提示框信息
@@ -174,51 +173,188 @@
         workid:'',//要删除的工作室id
         type:'',//代表操作类型
         myid:'',//禁用启用id
-        val:'',//确定当前查询类型
-        otbtitle:['工作室名称','工作室等级','交易时间','交易金额'],//详情页面的theader
+        val:'0',//确定当前查询类型
+        otbtitle:['工作室名称','智慧资产账号','交易时间','交易金额'],//详情页面的theader
         otbmsg:[],//详情页面table信息
         dtotal:0,//详情页翻页
         dcurrent:1,//详情页翻页当前页
-        monthall:'9999.9元'
+        monthall:'9999.9元',
+        page:'1',
+        openname:'',
+        nowmonth:'',
+        month:'',
+        dtid:'',
+        mtyes:false,//有月份的搜索
+        monthdtall:''//所有的信息
       }
     },
     methods:{
       searchword(){
-        this.$http({
-          method:'',
-          url:'',
-          params:{
-
-          },
-          headers:{
-
-          }
-        }).then(res => {
-
-        }, err => {
-
-        })
+        if(this.search === ''){
+          this.show = true;
+          this.msg = '请输入关键字';
+          return;
+        }
+        this.val = 3;
+        this.status = '0';
+        this.total = 0;
+        this.current = 1;
+        this.getworld(this.search,'1');
       },//搜索
       reloadthis(){
-
+        this.total = 0;
+        this.current = 1;
+        this.search = '';
+        this.status = '0';
+        this.getmsg('1','4');
       },//刷新
       getexcel(){
+        this.$http({
+          method:'GET',
+          url:'http://120.76.137.157:8887/work_admin/export_works/',
+          headers:{
+            'Authorization':sessionStorage.getItem('token')
+          }
+        }).then( res => {
+          if(res.body.status == '200'){
+            window.open(res.body.path)
+          }else{
+            this.msg = res.body.msg;
+            this.show = true;
+          }
 
+        }, res => {
+          this.msg = '网络链接失败,请稍后再试';
+          this.show = true;
+        })
       },//导出报表
       searchstatus(val){
+        if(this.search){
+          this.search = '';
+        }
         this.val = val;
+        this.total = 0;
+        this.current = 1;
+        if(val == '0'){
+          this.getmsg('1','4')
+        }
+        if(val == '1'){
+          this.getmsg('1','5');
+        }
+        if(val == '2'){
+          this.getmsg('1','6');
+        }
       },//select变化
       pagechange(newinx){
         this.current = newinx;
-        console.log(this.current,newinx);
+        if(this.val == '0'){
+          this.getmsg(newinx,'4');
+        }
+        if(this.val == '1'){
+          this.getmsg(newinx,'5');
+        }
+        if(this.val == '2'){
+          this.getmsg(newinx,'6');
+        }
+        if(this.val == '3'){
+          this.getworld(this.search,newinx);
+        }
       },//翻页
       close(){
         this.show = false;
       },//关闭当前的提示框
       opendetail(tbm){
-        this.showdetail = true;
-        this.monthall = tbm.mobile+'元';
+        this.dtotal = 0;
+        this.dcurrent = 1;
+        this.$http({
+          type:'get',
+          url:'http://120.76.137.157:47623/backend/workshop_score',
+          params:{
+            work_id:tbm.id
+          }
+        }).then(res =>{
+          if(res.body.status == '200'){
+          if(res.body.identity[0].details.length < 1){
+            this.msg = '该工作室没有历史业绩信息';
+            this.show = true;
+            return;
+          }
+          this.dtid = tbm.id;
+          this.openname = tbm.work_name;
+          this.monthall = res.body.identity[0].score+'元';
+          this.nowmonth = tbm.score+'元';
+          if(res.body.identity[0].details.length <= 10){
+            this.otbmsg = res.body.identity[0].details;
+          }else{
+            this.monthdtall = res.body.identity[0].details;
+            this.otbmsg = this.monthdtall.slice(0,10);
+            this.dtotal = res.body.identity[0].details.length;
+            this.dcurrent = 1;
+          }
+          this.showdetail = true;
+        }else{
+          this.msg = res.body.message;
+          this.show = true;
+        }
+      },err =>{
+          this.msg = '网络链接失败，请稍后再试';
+          this.show = true;
+        })
       },//打开详情页面
+      monthchange(val){
+        this.month = val;
+      },
+      searchmonth(){
+        if(!this.month){
+          this.msg = '请输入查询的月份';
+          this.show = true;
+          return;
+        }
+        this.mtyes = true;
+        this.searchmot(this.month.split('-')[0],parseInt(this.month.split('-')[1]))
+      },
+      dhandleClick(val){
+        this.dcurrent = val;
+          if(val == 1){
+            this.otbmsg = this.monthdtall.slice(0,10);
+          }else if(val * 10 <= total){
+            this.otbmsg = this.monthdtall.slice((val-1)*10,val*10);
+          }else{
+            this.otbmsg = this.monthdtall.slice((val-1)*10);
+          }
+      },//详情页翻页
+      searchmot(year,mt){
+        this.$http({
+          type:'get',
+          url:'http://120.76.137.157:47623/backend/workshop_score',
+          params:{
+            work_id:this.dtid,
+            year:year,
+            month:mt
+          }
+        }).then(res =>{
+          if(res.body.status == '200'){
+          this.monthall = res.body.identity[0].score+'元';
+          if(res.body.identity[0].details.length <= 10){
+            this.otbmsg = res.body.identity[0].details;
+          }else{
+            this.monthdtall = res.body.identity[0].details;
+            this.otbmsg = this.monthdtall.slice(0,10);
+            this.dtotal = res.body.identity[0].details.length;
+            this.dcurrent = 1;
+          }
+          if(this.otbmsg.length < 1){
+            this.msg = '当月没有业绩，请重新选择查询';
+            this.show = true;
+          }
+        }else{
+          this.msg = res.body.message;
+          this.show = true;
+        }
+      },err =>{
+
+        })
+      },
       getback(){
         this.showdetail = false;
       },//关闭详情页面
@@ -247,9 +383,31 @@
             'Authorization':sessionStorage.getItem('token')
           }
         }).then(res => {
+          this.msg = res.body.msg;
+          this.show = true;
           if(res.body.status == '201'){
-            //成功逻辑
+            this.type = '';
+            this.myid = '';
+            this.passmsg = '';
+            this.gopass = false;
+            this.total = 0;
+            this.current = 1;
+            if(this.val == '0'){
+              this.getmsg('1','4');
+            }
+            if(this.val == '1'){
+              this.getmsg('1','5');
+            }
+            if(this.val == '2'){
+              this.getmsg('1','6');
+            }
+            if(this.val == '3'){
+              this.getworld(this.search,'1');
+            }
           }
+        }, err => {
+            this.msg = '网络链接失败,请稍后再试';
+            this.show = true;
         })
       },//确定禁用或者启用
       closepass(){
@@ -276,6 +434,9 @@
           if(res.body.status == '201'){
             //成功逻辑
           }
+        }, err => {
+          this.msg = '网络链接失败,请稍后再试';
+          this.show = true;
         })
       },//确定更换管理员
       goout(){
@@ -283,9 +444,8 @@
       },//关闭更换管理员弹框
       operateopen(type,tbm){
         this.type = type;
-        this.operatenow = parseInt(tbm.level);
-        this.operateid = tbm.mobile;
-        this.workid = tbm.work_id;
+        this.operatenow = tbm.level;
+        this.workid = tbm.id;
         switch(type){
           case 'upgrade':
                 this.operatemsg = '确定升级'+tbm.work_name+'工作室？';
@@ -317,34 +477,172 @@
             headers:{
               'Authorization':sessionStorage.getItem('token')
             }
-          }).then()
+          }).then( res => {
+            this.msg = res.body.msg;
+            this.show = true;
+            if(res.body.status == '204'){
+              this.type = '';
+              this.operatenow = '';
+              this.workid = '';
+              this.operatebox = false;
+              this.total = 0;
+              this.current = 1;
+              if(this.val == '0'){
+                this.getmsg('1','4');
+              }
+              if(this.val == '1'){
+                this.getmsg('1','5');
+              }
+              if(this.val == '2'){
+                this.getmsg('1','6');
+              }
+              if(this.val == '3'){
+                this.getworld(this.search,'1');
+              }
+            }
+          },err => {
+              this.msg = '网络链接失败,请稍后再试';
+              this.show = true;
+          })
         }else if(this.type === 'upgrade'){
+          if(this.operatenow == '3'){
+            this.msg = '分公司为当前最高等级无法升级';
+            this.operatebox = false;
+            this.show = true;
+            return;
+          }
           this.$http({
             method:'PUT',
             url:'http://120.76.137.157:8887/work_admin/set_level/',
             body:{
-              mobile:this.operateid,
-              level:this.level+1
+              work_id:this.workid,
+              level:this.operatenow+1
             },
             headers:{
               'Authorization':sessionStorage.getItem('token')
             }
-          }).then()
+          }).then( res => {
+            this.msg = res.body.msg;
+            this.show = true;
+            if(res.body.status == '201'){
+              this.type = '';
+              this.operatenow = '';
+              this.workid = '';
+              this.operatebox = false;
+              this.total = 0;
+              this.current = 1;
+              if(this.val == '0'){
+                this.getmsg('1','4');
+              }
+              if(this.val == '1'){
+                this.getmsg('1','5');
+              }
+              if(this.val == '2'){
+                this.getmsg('1','6');
+              }
+              if(this.val == '3'){
+                this.getworld(this.search,'1');
+              }
+            }
+          }, err => {
+              this.msg = '网络链接失败,请稍后再试';
+              this.show = true;
+          })
+
+
         }else{
+          if(this.operatenow == '1'){
+            this.msg = '工作室为当前最低等级无法降级';
+            this.operatebox = false;
+            this.show = true;
+            return;
+          }
           this.$http({
             method:'PUT',
             url:'http://120.76.137.157:8887/work_admin/set_level/',
             body:{
-              mobile:this.operateid,
-              level:this.level - 1
+              work_id:this.workid,
+              level:this.operatenow - 1
             },
             headers:{
               'Authorization':sessionStorage.getItem('token')
             }
-          }).then()
+          }).then(res => {
+            this.msg = res.body.msg;
+            this.show = true;
+              if(res.body.status == '201'){
+                this.type = '';
+                this.operatenow = '';
+                this.workid = '';
+                this.operatebox = false;
+                this.total = 0;
+                this.current = 1;
+                if(this.val == '0'){
+                  this.getmsg('1','4');
+                }
+                if(this.val == '1'){
+                  this.getmsg('1','5');
+                }
+                if(this.val == '2'){
+                  this.getmsg('1','6');
+                }
+                if(this.val == '3'){
+                  this.getworld(this.search,'1');
+                }
+              }
+            }, err => {
+                this.msg = '网络链接失败,请稍后再试';
+                this.show = true;
+            })
         }
 
       },//确定升级等
+      getdtmsg(){
+        this.$http({
+          method:'GET',
+          url:'',
+          params:{
+
+          }
+        }).then(res => {
+
+        }, err => {
+
+        })
+      },//获取业绩
+      getworld:function(data,page){
+        this.$http({
+          method:'GET',
+          url:'http://120.76.137.157:8887/work_admin/get_all_user/',
+          params:{
+            get_type:'search',
+            search_type:'4',
+            word:data,
+            page:page
+          },
+          headers:{
+            'Authorization':sessionStorage.getItem('token')
+          }
+        }).then( res => {
+          if(res.body.status == '200'){
+          this.tbmsg = res.body.user_list;
+          this.total = res.body.page_info.count;
+          var scoredata = res.body.score_list;
+          if(scoredata.length > 0){
+            for(var i in scoredata){
+              for(var j in this.tbmsg){
+                if(this.tbmsg[j].id == scoredata[i].id ){
+                  this.tbmsg[j].score = scoredata[i].score
+                }
+              }
+            }
+          }
+        }
+      }, err => {
+          this.msg = '网络链接失败请稍候再试';
+          this.show = true;
+        })
+      },//关键字搜索的函数
       getmsg(page,type){
         this.$http({
           method:'GET',
@@ -360,9 +658,20 @@
           if(res.body.status == '200'){
             this.tbmsg = res.body.user_list;
             this.total = res.body.page_info.count;
+            var scoredata = res.body.score_list;
+            if(scoredata.length > 0){
+              for(var i in scoredata){
+                for(var j in this.tbmsg){
+                  if(this.tbmsg[j].id == scoredata[i].id ){
+                    this.tbmsg[j].score = scoredata[i].score
+                  }
+                }
+              }
+            }
           }
         }, res => {
-
+          this.msg = '网络链接失败,请稍后再试';
+          this.show = true;
         })
       }//获取当前页面的信息
     },
@@ -370,17 +679,21 @@
       '$route':'getmsg'
     },
     created(){
-      this.getmsg('1','24');
+      this.getmsg('1','4');
     }
 
   }
 </script>
 <style scoped>
+  .mm{
+    text-align:left;
+  }
   .detailall{
     height:72px;
-    line-height:72px;
+    line-height:36px;
     font-size:20px;
     font-weight:bold;
+    text-align:left;
   }
   .workaccount-paging1{
     margin-bottom:20px;

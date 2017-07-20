@@ -26,15 +26,15 @@
                 <mu-icon slot="left" value="tab"/>
               </mu-list-item>
             </mu-list-item>-->
-            <mu-list-item title="报单管理" toggleNested class="ddti">
+          <!--  <mu-list-item title="报单管理" toggleNested class="ddti">
               <mu-icon slot="left" value="view_list"/>
               <mu-list-item slot="nested" title="报单记录" value="customs-record" href="#/workroom/workcustomsrecord" class="ddl">
                 <mu-icon slot="left" value="reorder"/>
               </mu-list-item>
-              <!--<mu-list-item slot="nested" title="我要报单" value="customs-post" href="#/workroom/workcustomspost" class="ddl">
+              <mu-list-item slot="nested" title="我要报单" value="customs-post" href="#/workroom/workcustomspost" class="ddl">
                 <mu-icon slot="left" value="view_day"/>
-              </mu-list-item>-->
-            </mu-list-item>
+              </mu-list-item>
+            </mu-list-item>-->
             <mu-list-item title="会员管理" toggleNested class="ddti">
               <mu-icon slot="left" value="account_box"/>
               <mu-list-item slot="nested" title="会员列表" value="member-list" href="#/workroom/workmemberlist" class="ddl">
@@ -52,9 +52,9 @@
             </mu-list-item>
             <mu-list-item title="工作室信息管理" toggleNested class="ddti">
               <mu-icon slot="left" value="assignmentind"/>
-              <mu-list-item slot="nested" title="工作室信息修改" value="information-get" href="#/workroom/workinformationget" class="ddl">
+              <!--<mu-list-item slot="nested" title="工作室信息修改" value="information-get" href="#/workroom/workinformationget" class="ddl">
                 <mu-icon slot="left" value="visibility"/>
-              </mu-list-item>
+              </mu-list-item>-->
               <mu-list-item slot="nested" title="修改密码" value="psd-modify" href="#/workroom/workpsdmodify" class="ddl">
                 <mu-icon slot="left" value="lock_open"/>
               </mu-list-item>
@@ -90,10 +90,10 @@
       }
     },
     beforeCreate:function(){
-     /* if(!sessionStorage.getItem('token')){
+      if(!sessionStorage.getItem('token')){
         alert("请登录");
         this.$router.push('/worklogin');
-      }*/
+      }
     },
     mounted:function(){
       this.accountname = sessionStorage.getItem('name');

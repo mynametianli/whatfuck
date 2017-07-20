@@ -29,6 +29,10 @@
             <mu-flat-button slot="actions" @click="close" primary label="取消"/>
             <mu-flat-button slot="actions" primary @click="setreward" label="确定"/>
           </mu-dialog>
+          <mu-dialog :open="show" title="温馨提示">
+            {{msg}}
+            <mu-flat-button label="确定" slot="actions" primary @click="closeshow"/>
+          </mu-dialog>
     </div>
 </template>
 <script>
@@ -38,39 +42,145 @@
       return {
         showcheck:false,
         tablehead:['等级','报单返还比例','现金奖励比例','操作'],
-        tabledata:[{lv:'工作室',restore:'40%',cash:'5%'},{lv:'运营中心',restore:'50%',cash:'5%'},{lv:'分公司',restore:'60%',cash:'5%'}],
+        tabledata:[],
         dialog:false,
         title:'',
         sliderban:false,
         cashreward:0,
-        custormrestore:0
+        custormrestore:0,
+        show:false,
+        msg:'',
+        lv:'',
+        info:''
 
       }
     },
     methods:{
+      closeshow(){
+        this.show = false;
+      },
       close(){
         this.dialog = false;
       },
       opendialog(data){
         this.cashreward = parseInt(data.cash);
         this.custormrestore = parseInt(data.restore);
+        this.lv = data.lv;
         this.title = data.lv + '奖励规则设置';
         this.dialog = true;
       },
       setreward(){
+        var back = this.custormrestore/100;
+        var reward = this.cashreward/100;
+        var args = [];
+        switch(this.lv){
+          case '工作室':
+                if(this.info.asset_back.workshop != back && this.info.asset_reward.workshop == reward){
+                  this.info.asset_back.workshop = back;
+                  args = [{'location':'asset_back', content:this.info.asset_back}]
+                }
+                if(this.info.asset_reward.workshop != reward && this.info.asset_back.workshop == back ){
+                  this.info.asset_reward.workshop = reward;
+                  args = [{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                if(this.info.asset_reward.workshop != reward && this.info.asset_back.workshop != back){
+                  this.info.asset_back.workshop = back;
+                  this.info.asset_reward.workshop = reward;
+                  args = [{'location':'asset_back', content:this.info.asset_back},{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                break;
+          case '运营中心':
+                if(this.info.asset_back.center != back && this.info.asset_reward.center == reward){
+                  this.info.asset_back.center = back;
+                  args = [{'location':'asset_back', content:this.info.asset_back}]
+                }
+                if(this.info.asset_reward.center != reward && this.info.asset_back.center == back ){
+                  this.info.asset_reward.center = reward;
+                  args = [{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                if(this.info.asset_reward.center != reward && this.info.asset_back.center != back){
+                  this.info.asset_back.center = back;
+                  this.info.asset_reward.center = reward;
+                  args = [{'location':'asset_back', content:this.info.asset_back},{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                break;
+          case '分公司':
+                if(this.info.asset_back.branch != back && this.info.asset_reward.branch == reward){
+                  this.info.asset_back.branch = back;
+                  args = [{'location':'asset_back', content:this.info.asset_back}]
+                }
+                if(this.info.asset_reward.branch != reward && this.info.asset_back.branch == back ){
+                  this.info.asset_reward.branch = reward;
+                  args = [{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                if(this.info.asset_reward.branch != reward && this.info.asset_back.branch != back){
+                  this.info.asset_back.branch = back;
+                  this.info.asset_reward.branch = reward;
+                  args = [{'location':'asset_back', content:this.info.asset_back},{'location':'asset_reward', content:this.info.asset_reward}]
+                }
+                break;
+          default:
+                break;
+        }
+        var data = {args:args}
         this.$http({
-          method:'',
-          url:'',
-          body:''
+          method:'PUT',
+          url:'http://120.76.137.157:8887/work_admin/workshop_args/',
+          body:data,
+          headers:{
+            'Authorization':sessionStorage.getItem('token')
+          }
         }).then( res => {
-
+            this.msg = res.body.msg;
+            this.close();
+            this.show = true;
+            if(res.body.status == '200'){
+              this.getmsg();
+            }
         }, err => {
-
+            this.close();
+            this.msg = '网络链接失败请稍后再试';
+            this.show = true;
         })
+      },
+      getmsg(){
+        this.$http({
+          type:'GET',
+          url:'http://120.76.137.157:8887/work_admin/workshop_args/',
+          headers:{
+            'Authorization':sessionStorage.getItem('token')
+          }
+        }).then(res => {
+          if(res.body.status == '200'){
+          this.tabledata = [{lv:'工作室',restore:this.accMul(res.body.info.asset_back.workshop,'100.0')+'%',cash:this.accMul(res.body.info.asset_reward.workshop,'100.0')+'%'},{lv:'运营中心',restore:this.accMul(res.body.info.asset_back.center,'100.0')+'%',cash:this.accMul(res.body.info.asset_reward.center,'100.0')+'%'},{lv:'分公司',restore:this.accMul(res.body.info.asset_back.branch,'100.0')+'%',cash:this.accMul(res.body.info.asset_reward.branch,'100.0')+'%'}];
+          this.info = res.body.info;
+        }else{
+          this.msg = res.body.msg;
+          this.show = true;
+        }
+
+      },err =>{
+          this.msg = '网络链接失败请稍后再试';
+          this.show = true;
+        })
+      },
+      accMul(arg1, arg2){
+        var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+          m += s1.split(".")[1].length;
+          m += s2.split(".")[1].length;
+          return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
       }
+     /* accDiv(arg1, arg2) {
+        var t1 = 0, t2 = 0, r1, r2;
+          t1 = arg1.toString().split(".")[1].length;
+          t2 = arg2.toString().split(".")[1].length;
+          r1 = Number(arg1.toString().replace(".", ""));
+          r2 = Number(arg2.toString().replace(".", ""));
+          return (r1 / r2) * pow(10, t2 - t1);
+      }*/
     },
     created(){
-
+      this.getmsg();
     }
   }
 </script>

@@ -27,7 +27,7 @@
               }
             ]
           },*/
-          {
+         /* {
             title:'报单管理',
             iconvalue:'credit_card',
             dt:[
@@ -44,7 +44,7 @@
                 iconvalue:'history'
               }
             ]
-          },
+          },*/
           /*{
             title:'提现管理',
             iconvalue:'account_box',
@@ -65,61 +65,67 @@
           },*/
           {
             title:'工作室管理',
-            iconvalue:'assignmentind',
+            iconvalue:':iconfont icon-gl',
             dt:[
               {
                 title:'工作室考核',
                 value:'assessment',
                 href:'#/hq/assessment',
-                iconvalue:'done_all'
-              },
-              {
+                iconvalue:':iconfont icon-kh'
+              }
+              /*{
                 title:'工作室审批',
                 value:'workaccountall',
                 href:'#/hq/workaccountall',
                 iconvalue:'add'
-              },
+              },*/
               /*{
                 title:'工作室添加',
                 value:'addworkaccount',
                 href:'#/hq/addworkaccount',
                 iconvalue:'add'
               },*/
-              {
+              /*{
                 title:'工作室列表',
                 value:'workaccountlist',
                 href:'#/hq/workaccountlist',
                 iconvalue:'view_list'
-              }
+              }*/
             ]
           },
           {
-            title:'奖励规则',
-            iconvalue:'call_missed_outgoing',
+            title:'奖励及费用设置',
+            iconvalue:':iconfont icon-shezhi',
             dt:[
               {
                 title:'奖励规则设置',
                 value:'rewardrule',
                 href:'#/hq/rewardrule',
-                iconvalue:'trending_down'
+                iconvalue:':iconfont icon-jl'
+              },
+              {
+                title:'智慧资产设置',
+                value:'rewardrules',
+                href:'#/hq/rewardrules',
+                iconvalue:':iconfont icon-icon'
               }
             ]
           },
           {
             title:'密码管理',
-            iconvalue:'group_work',
+            iconvalue:':iconfont icon-mmgl',
             dt:[
-              {
+              /*{
                 title:'系统拨币密码修改',
                 value:'workaccountpsd',
                 href:'#/hq/workaccountpsd',
                 iconvalue:'lock_outline'
-              },
+              },*/
               {
                 title:'系统登录密码修改',
                 value:'workaccountpsdm',
                 href:'#/hq/workaccountpsdm',
-                iconvalue:'lock'
+                iconvalue:':iconfont icon-mima'
               }
             ]
           }

@@ -34,12 +34,13 @@ import hqpworuser from '@/components/hqpworuser'
 import hqworkaccountlist from '@/components/hqworkaccountlist'
 import activate from '@/components/activate'
 import rewardrule from '@/components/hqrewardrule'
+import rewardrules from '@/components/hqrewardrules'
 import workaccountall from '@/components/hqworkaccountall'
 Vue.use(Router)
 
 export default new Router({
   routes: [
-   {
+   /*{
       path: '/',
       name: 'login',
       component: login
@@ -47,9 +48,9 @@ export default new Router({
     {
       path:'/worklogin',
       component:worklogin
-    },
+    },*/
     {
-      path:'/hqlogin',
+      path:'/',
       component:hqlogin
     },
     {
@@ -182,6 +183,10 @@ export default new Router({
         {
           path:'rewardrule',
           component:rewardrule
+        },
+        {
+          path:'rewardrules',
+          component:rewardrules
         },
         {
           path:'workaccountall',

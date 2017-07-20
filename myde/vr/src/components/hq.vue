@@ -2,10 +2,10 @@
   <div id="hq">
     <div class="hq-header">
       <div class="logo l">
-        <mu-icon value="language" :size="size" class="imgicon"></mu-icon>
+        <mu-icon value=":iconfont icon-logo" :size="size" class="imgicon"></mu-icon>
       </div>
       <div class="text l">
-        VR9总部后台管理系统
+        VR9总部工作室业绩管理系统
       </div>
       <div class="r out-to">
         <span class="l accounttitle">{{accountname}}</span>
@@ -73,7 +73,8 @@
       },
       goout:function(router){
         sessionStorage.clear();
-        router.push('/hqlogin');
+        //router.push('/hqlogin');
+        router.push('/');
       },
       handleChange:function(val){
         this.value = val;
@@ -121,11 +122,11 @@
       }
     },
     beforeCreate:function(){
-     /*if(!sessionStorage.getItem('token')){
+     if(!sessionStorage.getItem('token')){
         alert("请登录");
         this.$router.push('/hqlogin');
         //window.location.href = '/';
-      }else{
+      }/*else{
        this.$http({
          method:'GET',
          url:'http://120.76.137.157:8887/work_admin/is_pwd/',
@@ -158,6 +159,9 @@
   }
 </script>
 <style scoped>
+  .icon-logo{
+    line-height:inherit;
+  }
   .accountps input{
     text-align:center;
   }

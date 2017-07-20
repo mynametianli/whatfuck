@@ -26,6 +26,8 @@
     },
     methods:{
       gowork:function(router){
+        alert('工作室功能正在升级中');
+        return;
         router.push('/worklogin')
       },
       gohq:function(router){

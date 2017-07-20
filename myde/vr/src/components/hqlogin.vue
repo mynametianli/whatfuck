@@ -2,21 +2,21 @@
   <div id="myname">
     <mu-flexbox class="flex-demo" align="center">
       <mu-flexbox-item class="demo-icon">
-        <mu-icon value="language" :size="size"></mu-icon>
+        <mu-icon value=":iconfont icon-logo" :size="size"></mu-icon>
       </mu-flexbox-item>
       <mu-flexbox-item class="" grow="11">
-        <mu-col class="col-demo" slot="default">VR9总部后台管理系统</mu-col>
+        <mu-col class="col-demo" slot="default">VR9总部工作室业绩管理系统</mu-col>
       </mu-flexbox-item>
     </mu-flexbox>
     <div class="login_box">
       <div class="myloginbox">
         <mu-paper class="demo-paper" :zDepth="4">
           <div class="backindex">
-            <button class="bki" @click="gobackindex">返回</button>
+            <!--<button class="bki" @click="gobackindex">返回</button>-->
           </div>
           <div class="login_text">登录</div>
-          <mu-text-field hintText="请输入您的账号" labelFloat label="账号" :errorText="accounterror" icon="account_circle" v-model="act" class="login_input" inputClass="my" iconClass="login_icon" @blur="actb" @input="actb"/><br/>
-          <mu-text-field class="login_input" hintText="请输入您的密码" labelFloat label="密码" :errorText="psderror" v-model="psd" type="password" icon="https" iconClass="login_icon" @blur="psdb" @input="psdb"/><br/>
+          <mu-text-field hintText="请输入您的账号" labelFloat label="账号" :errorText="accounterror" icon=":iconfont icon-zh" v-model="act" class="login_input" inputClass="my" iconClass="login_icon" @blur="actb" @input="actb"/><br/>
+          <mu-text-field class="login_input" hintText="请输入您的密码" labelFloat label="密码" :errorText="psderror" v-model="psd" type="password" icon=":iconfont icon-suo" iconClass="login_icon" @blur="psdb" @input="psdb"/><br/>
           <!-- <mu-text-field hintText="请输入验证码" class="code"/>
            <mu-raised-button :label="label" class="mr2 code_detail" disabled backgroundColor="white" color="red"/>
            <mu-raised-button label="看不清" class="mr2" :primary="isprimary"/><br/>-->
@@ -114,7 +114,7 @@
             }else{
               localStorage.removeItem('rembers');
             }
-            router.push('hq/dfhandle');
+            router.push('/hq/assessment');
           }else{
             this.msg = res.body.msg;
             this.show = true;
@@ -145,6 +145,15 @@
   }
 </style>
 <style>
+  .icon-logo{
+    line-height:1;
+  }
+  .icon-zh{
+    line-height:.9;
+  }
+  .icon-suo{
+    line-height:.9;
+  }
   .backindex{
     position:absolute;
     left:10px;

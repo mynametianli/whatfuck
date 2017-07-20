@@ -47,7 +47,7 @@ export default {
     box-sizing:border-box;
   }
   body{
-    -moz-user-select:  none;
+    /*-moz-user-select:  none;*/
   }
   html,body{
     width:100%;
