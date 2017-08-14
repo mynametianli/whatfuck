@@ -1,0 +1,561 @@
+<h1>厚朴诊所信息系统（前端文档）</h1>
+
+<h2>1. 整体设计</h2>
+
+<h3>1. 技术选型</h3>
+
+<ul>
+	<li>系统采取单页面应用（<em>single page application</em>）模式。</li>
+	<li>前端模块加载方式使用异步加载（<em>AMD</em>）规范的 <em>Require.js</em> 。 </li>
+	<li>前端开发架构采用MVC模式的 <em>Backbone.js</em>。</li>
+	<li>UI框架采用 <em>Amaze UI v2.4.2 </em>。</li>
+	<li>压缩、打包js文件使用 <em>Require.js</em> 的插件 <em>r.js</em>。</li>
+	<li>系统整体采用前后端分离的 <em>Restful</em>架构，前端向后端发起的请求均为 <em>ajax</em>请求。</li>
+</ul>
+
+<h3>2. 文件结构</h3>
+
+<ul>
+	<li><strong>css</strong> (包含项目所有css文件）</li>
+	<li><strong>dist</strong>（文件压缩打包后的输出目录，网站实际的文件地址）</li>
+	<li><strong>imgs</strong>（包含项目所有的图片，图标文件）</li>
+	<li><strong>js</strong>（包含项目所有js文件）
+
+		<ul>
+			<li><strong>libs</strong>（包含项目引入的基础包，如query，backbone，amazeui）</li>
+			<li><strong>modules</strong>（包含系统子功能的文件夹，子文件夹对应菜单，如Index包含首页所有页面逻辑，Bill包含收费所有页面逻辑等）</li>
+			<li><strong>plugins</strong>（包含项目引入的基础包上的插件，如amazeui-chosen）</li>
+			<li>almond.js（多文件模块化加载入口，简化的requirejs)</li>
+			<li>config.js （全局配置文件，预留，没有实际逻辑）</li>
+			<li>jethisMain.js（require.js设置的主文件，同时有菜单权限和用户信息的逻辑）</li>
+			<li>jethisRouter.js （backbone路由设置文件，包含页面通用逻辑）</li>
+			<li>libs.js （方便打包基础包的文件）</li>
+		</ul></li>
+	<li>build.js（r.js 打包配置文件）</li>
+	<li>jethis.html（主页面，所有路由导向的页面只是更新这个页面）</li>
+	<li>r.js（打包工具）</li>
+	<li>regist.html（注册页面）</li>
+	<li>restPwd.html（重设密码页面）</li>
+	<li>SignIn.html（登录页面，<em>www.jethis.cn</em> 即指向这个页面 ）</li>
+</ul>
+
+<h3>3. 页面结构</h3>
+
+<p>由于是单页面应用，页面结构基本一致，由 <strong>jethis.html</strong> 决定。<strong>jethis.html</strong> 的结构为上－中－下。</p>
+
+<ul>
+	<li>上方显示logo，一级菜单，用户名，科室，未读消息数，以及退出按钮。</li>
+	<li>下方显示系统名称以及客服电话。</li>
+	<li>中间又分为左右两个部分，左侧为二级菜单，右侧为菜单对应的内容。</li>
+</ul>
+
+<p>其中，左侧菜单通用模板位于<strong>/js/modules/Common/sidebar.html</strong>，在登录获取到用户的权限并保存到本地sessionStorage <sup><a id="ffn1" href="#fn1" class="footnote">1</a></sup>以后，由jethisMain.js <sup><a id="ffn2" href="#fn2" class="footnote">2</a></sup>中对数权限数据进行处理 ，即可组装用户拥有的菜单数据，通过handlebars引擎渲染到DOM上。</p>
+
+<h3>4. jethisRouter.js和jethisMain.js中的全局逻辑</h3>
+
+<ul>
+	<li><strong>jethisRouter.js</strong> 中除了设置路由，跳转页面逻辑以外，还设置了每个页面公用的逻辑：
+
+		<ul>
+			<li> ajax全局设置，error回调，timeout超时。</li>
+			<li>导出excel按钮全局事件绑定，点击按钮导出所在表的Excel。</li>
+			<li>页面载入时的焦点聚焦到含 “first-focus” 类名的元素上。</li>
+			<li>含有start类名的datepicker选择的日期必须在end类名的datepicker选择的日期之前。</li>
+			<li>请求用户实时的未读消息数量。</li>
+		</ul></li>
+	<li><strong>jethisMain.js</strong> 中除了定义文件路径以外，还设置了页面初次载入的逻辑：
+
+		<ul>
+			<li>开启路由。</li>
+		</ul>
+
+		<p>window.router = new Router(); Backbone.history.start();</p>
+
+		<ul>
+			<li>显示右上角用户信息，包含用户名，科室（如果没有则不显示），绑定退出按钮的点击事件，包括清除缓存等。</li>
+			<li>根据权限显示一级菜单和二级菜单。</li>
+			<li>轮询（原用作保持登录状态，后来后端换了一种实现方式，此处预留，将来需要长连接即可修改此处）</li>
+			<li>禁用点击backspace事件，防止引发的意外浏览器回退现象。</li>
+		</ul></li>
+</ul>
+
+<h2>2. 库、组件</h2>
+
+<h3>1.<a href="http://www.css88.com/doc/backbone/">Backbone.js 1.2.3</a></h3>
+
+<ul>
+	<li><strong>router</strong>包含前端路由，以及每个页面载入前的逻辑，已在上文全局逻辑中说明，此处不赘述。<strong>jethisRouter.js</strong>中引用了各个一级菜单的view，在routes属性中配置了各个一级菜单的路由。路由的可选部分放在括号中<strong>(/:optional)</strong>，当点击二级菜单时，即传递子菜单的submenu到optional中（例:#bill/charge”,传递bill作为<strong>changePage</strong>的参数），由于一级菜单一般没有自己的html页面，所以每次都会传递submenu到<strong>changePage</strong>中，随后渲染页面(<strong>$(&#39;.admin-main&#39;).html($(view.el));</strong>)，再进行一系列的全局初始dom操作。</li>
+	<li><strong>view</strong>里包含了页面的全部逻辑，<strong>lisentTo</strong>方法与<strong>on</strong>方法为view与其他model、view通信的方式，写在<strong>initialize</strong>方法里。对dom元素的操作（包括<strong>bootstrapTable</strong>或者<strong>datepicker</strong>这样的组件渲染dom）都写在<strong>render</strong>方法里。初次请求写在<strong>render</strong>方法里。所有的事件写在<strong>events</strong>里（必须是<strong>view.el</strong>里面的元素上绑定的事件）</li>
+	<li><strong>model</strong>包含所有与后端交互的连接，基本都是<strong>ajax</strong>。如果方式为<strong>get</strong>，则按照常用的方式传递参数，附在链接后面即可，实现方式为<strong>$.ajax({ type:&#39;get&#39; , data:{})</strong>。如果方式为<strong>post</strong>或者<strong>patch</strong>，传递的form表单必须转为JSON字符串，<strong>$.ajax({ type:&#39;post&#39; , data:{JSON.stringify(param)})</strong>。</li>
+	<li><strong>model</strong>与<strong>view</strong>通信的方式为trigger events。model内部设置一个result的对象，在success和error的情况下触发相同的事件(eventName)，返回不同的结果。注意:在开发中期，为了统一请求错误的表现，舍弃了done/fail的回调方式，并且在<strong>jethisRouter.js</strong>中通过ajaxSetup全局设置了error的回调，所以很多model的方法中只写了success回调。但是到这个迭代完成，后端url并没有统一的错误标识码规范，因此很多方法加上error回调也是很有必要的，后续迭代可以完善这个方面。</li>
+</ul>
+
+<h3>2.<a href="http://amazeui.org/">Amaze UI v2.4.2</a></h3>
+
+<ul>
+	<li>页面整体布局采用了amazeui的样式及inputgroup，datepicker，tabs，panel，collapse等组件。</li>
+	<li>修改了amazeui，修改的地方具有注释（for jethis）</li>
+	<li>由于amazeui与bootstrap组件上均绑定在<strong>$.fn</strong>上且同名，因此组件在调用时往往会发生冲突。当前解决方案是，在 <strong>/js/libs/bootstrap/bootstrap.js</strong>中把相同名字的组件修改名称。（bootstrap.js 713-726行，修改collapse为Btcollapse；bootstrap.js 2345-2347行，修改modal为bootstrapModal；）</li>
+</ul>
+
+<h3>3.<a href="http://bootstrap-table.wenzhixin.net.cn/">bootstrap-table 1.11.0</a></h3>
+
+<ul>
+	<li>几乎全部的数据呈现都采用了bootstrap-table。常用的方法是<strong>load</strong>加载数据，onClickRow单行点击事件，pagination分页等。</li>
+	<li>bootstrapTable加载即<strong>sidePagination</strong>属性有两种方式，client和server。client就是载入本地数据，在数据量小的情况下，可以使用client模式，直接load数据，绝大多数加载均采用了这个模式。server模式是在后端已经完成分页算法情况下的载入方式，url设置为请求的url，使用queryParams传递参数，responseHandler处理返回的数据，点击页码时触发onPageChange方法向后端请求对应的页码。<strong>注意</strong>：server模式下，数据源必须为<strong>{rows:[],total:20}</strong> 这种格式。</li>
+	<li>由于对插件认识的不完善，项目中没有采用server模式。<strong>/js/libs/bootstrap-table/bootstrap-table.js</strong> 中增加了jethis，修改的代码为1304-1305，1600-1603，2359-2361行。这种情况下数据源必须为<strong>{rows:[],dataNum:20}</strong> 这种格式。</li>
+</ul>
+
+<h3>4.<a href="https://github.com/hhurz/tableExport.jquery.plugin">tableExport</a></h3>
+
+<ul>
+	<li>jethisMain.js 224-236行给全局.excel_tool 绑定了导出excel的方法。</li>
+	<li>导出excel中的单元格中数字过长，会采用科学计数法。解决方案是 <strong>/js/plugins/tableExport/tableExport.js</strong> 修改了348-349行，给td加上了style样式: <strong>mso-number-format:/@;</strong> 。</li>
+	<li>所有<strong>.table_panel</strong>的标题必须加上<strong>panel_title</strong>的className。</li>
+</ul>
+
+<h3>5.<a href="https://github.com/harvesthq/chosen">chosen</a></h3>
+
+<ul>
+	<li>amzeui样式的select插件。</li>
+	<li>每次赋值后必须<strong>$elem.trigger(&quot;chosen:updated&quot;)</strong>。</li>
+	<li>多选时，用数组<strong>[a1,a2,a3]</strong>赋值，val()返回<strong>&quot;a1,a2,a3&quot;</strong></li>
+</ul>
+
+<h3>6.<a href="http://github.com/requirejs/r.js">r.js</a></h3>
+
+<ul>
+	<li>压缩打包工具，配置文件在<strong>build.js</strong>。</li>
+	<li>由于逻辑较多，打包成单个文件体积太大， 因此分为多个模块导出。</li>
+</ul>
+
+<h3>7.<a href="http://github.com/requirejs/almond">almond.js</a></h3>
+
+<ul>
+	<li>require.js 的精简版。</li>
+	<li>可以不设置data-main，自动解析define方法定义的模块。</li>
+</ul>
+
+<h2>3. 注册登录</h2>
+
+<ul>
+	<li>注册
+
+		<ul>
+			<li>页面为<strong>regist.html</strong>。</li>
+			<li>逻辑在 <strong>js/modules/viewModule/signup/signup.js</strong>，<strong>js/modules/viewModule/signup/baseInfo.js</strong>。</li>
+			<li>注册提交方式为post，数据格式为<strong>formdata</strong>。</li>
+		</ul></li>
+	<li>登录
+
+		<ul>
+			<li>页面为<strong>SignIn.html</strong>，逻辑在 <strong>js/modules/viewModule/signin/login.js</strong>。</li>
+			<li>登录采取了aes加密。</li>
+			<li>登录成功以后保存了基础信息，包括医院，医生，用户，当前对<strong>sessionStorage</strong>存取没有加密，后续可以考虑加上加密/解密操作。</li>
+		</ul></li>
+	<li>重设密码
+
+		<ul>
+			<li>页面为<strong>resetPwd.html</strong>，逻辑在 <strong>js/modules/viewModule/resetPwd/resetPwd.js</strong></li>
+		</ul></li>
+</ul>
+
+<h2>4. 功能模块</h2>
+
+<ul>
+	<li>由于页面逻辑过多且重复，文档中逐一叙述于查询无益，此处均简述。主要概括了各个菜单的功能，以及不同模块之间的联系。</li>
+	<li>所有一级菜单的文件均有一个同名的View（如/modules/Bill文件夹中的billView.js）,负责接收由jethisRouter分发过来的子菜单id，也即submenu，随后选择相应的子view，赋值给这个view的el属性。以下只描述各二级菜单的功能及逻辑。</li>
+	<li>p.s. curd 表示增加(Create)、读取查询(Retrieve)、更新(Update)和删除(Delete)</li>
+</ul>
+
+<h3>1.首页 (/js/modules/Index)</h3>
+
+<ul>
+	<li>通知
+
+		<ul>
+			<li>请求的方法为 <strong>IndexModel.getTodaynews</strong>，对应的URI为 <strong>/jethis/news/allNewsRecord/1</strong></li>
+			<li>显示当前收到的通知标题及时间。通知可以在<strong>办公-推送通知</strong>中由管添加，同时可以在<strong>办公-我的通知</strong>中查看详情。</li>
+			<li>点击首页的通知也可以跳转到<strong>办公-我的通知</strong>页面。</li>
+		</ul></li>
+	<li>动态
+
+		<ul>
+			<li>请求的方法为 <strong>IndexModel.getDynamicNews</strong>，对应的URI为 <strong>/jethis/News/GetNewsRecord</strong></li>
+			<li>显示当前收到的新闻标题及时间。通知可以在<strong>办公-发布动态</strong>中由管理员添加，同时可以在<strong>办公-全部动态</strong>中查看详情。</li>
+			<li>点击首页的新闻也可以跳转到<strong>办公-全部动态</strong>页面。</li>
+			<li><strong>后续可以加入图片，轮播展示。</strong></li>
+		</ul></li>
+	<li>今日待办事项
+
+		<ul>
+			<li>请求的方法为 <strong>IndexView.changeSelect</strong>，调用通用查询接口 <sup><a id="ffn3" href="#fn3" class="footnote">3</a></sup></li>
+			<li>当前登录用户为医生，则显示当天医生的排班，点击日期可以进行查询。</li>
+			<li>当前用户没有医生角色，则无功能。</li>
+		</ul></li>
+	<li>今日概况
+
+		<ul>
+			<li>请求的方法为 <strong>IndexModel.getHospitalCondition</strong>，对应的URI为 <strong>/common/HomePageInfo</strong></li>
+			<li>根据角色显示统计内容，显示的columns位于IndexView 19-35行，例：医生角色显示挂号人数，就诊人数，中药处方数，西药处方数。</li>
+		</ul></li>
+</ul>
+
+<h3>2.挂号 (/js/modules/Regist)</h3>
+
+<ul>
+	<li>新开就诊<strong>(./register)</strong>
+
+		<ul>
+			<li><strong>挂号与患者注册功能。</strong></li>
+			<li>患者查询的方法为：通过id查询 <strong>/js/modules/Common/patientModel.searchPatientById</strong>，通过患者姓名查询 <strong>/js/modules/Common/patientModel.searchPatientByName</strong>，通过id获取患者时只有一条记录，直接对患者详情进行填充，通过姓名获取患者时如果有一条记录则直接填充患者详情，如果有多条记录，会在患者姓名查询框下生成表格，点击一行选择患者并填充患者详情。</li>
+			<li>挂号的号池可以在<strong>办公-排班</strong>设置。查询当前号池的方法是<strong>registerModel.getDoctor</strong>，URI是 <strong>/jethis/registeration/get_registeration_data</strong>，此处会<strong>根据当前时间来获取</strong>，早上可以看到所有班别的医生，下午就只能看到由下午班和夜班的医生。</li>
+			<li>挂号的方法是<strong>registerModel.regist</strong>,URI是 <strong>/jethis/registeration/patientregisteration</strong></li>
+			<li>目前挂号仅支持现金收费。</li>
+			<li>患者注册。方法是<strong>/js/modules/Common/patientModel.addPatient</strong>，URI是 <strong>/jethis/registeration/addpatientinfo</strong>。</li>
+		</ul></li>
+	<li>挂号管理<strong>(./searchRegister)</strong>
+
+		<ul>
+			<li><strong>查询所有挂号情况</strong>。</li>
+			<li>对于未收费的挂号（多为医生加号）可以进行收费，对于未就诊的挂号进行补打印。</li>
+			<li>查询挂号记录的方法是<strong>searchRegisterModel.getRegInfo</strong>,对应的URI是 <strong>/jethis/Patient/RegisterRecord</strong>。</li>
+			<li>补缴挂号费的方法是<strong>searchRegisterModel.chargeRecord</strong>,对应的URI是 <strong>/jethis/registeration/NewChargeRecord</strong>。</li>
+			<li>打印挂号费的方法是<strong>searchRegisterView.printReg</strong>。</li>
+		</ul></li>
+	<li>挂号统计<strong>(./totalRegister)</strong>
+
+		<ul>
+			<li> 默认显示根据科室统计的挂号数据，点击科室统计表格的任意行，弹框显示该科室内不同医生的挂号数据。</li>
+			<li> 查询挂号记录的方法是<strong>searchRegisterModel.getDepartment</strong>,对应的URI是 <strong>/jethis/registeration/statisticsbydepartment</strong>。</li>
+			<li>补缴挂号费的方法是<strong>totalRegisterModel.getdoctotal</strong>,对应的URI是 <strong>/jethis/registeration/statisticsbydoctor</strong>。</li>
+		</ul></li>
+</ul>
+
+<h3>3.诊疗 (/js/modules/Diagnose)</h3>
+
+<ul>
+	<li>就诊队列<strong>(regPatsView)</strong>
+
+		<ul>
+			<li>获取当前医生的待诊、已诊患者。</li>
+			<li>点击患者获取详细信息。</li>
+			<li>双击患者或者点击 开始就诊 按钮，现诊显示患者详细信息以及历史就诊记录。</li>
+			<li>点击就诊记录显示记录详情，可以补打印病历。</li>
+		</ul></li>
+	<li>处方界面<strong>(recipeView)</strong>
+
+		<ul>
+			<li>初始化中间处方部分的dom结构，包括各个panel以及处方药物的表格。</li>
+		</ul></li>
+	<li>药品处置<strong>(treatmentsView)</strong>
+
+		<ul>
+			<li>初始化药品及处置的表格，并请求相应的数据。</li>
+			<li>点击药物时，触发事件。430行，<strong>that.trigger(&quot;addTreatments&quot;, [row]);</strong></li>
+		</ul></li>
+	<li>诊疗主界面<strong>(diagnoseView)</strong>
+
+		<ul>
+			<li>将上述三个view的内容填充进diagnose的左中右分栏。</li>
+			<li>监听子view的事件。如，54行，<strong>this.treatments.on(&quot;addTreatments&quot;, this.addTreatments, this);</strong>，执行addTreatments方法，添加药物进处方界面。</li>
+			<li>点击panel上的panel_tool，弹出相应的弹窗，例如 体格检查，既往史等。</li>
+		</ul></li>
+</ul>
+
+<h3>4.财务 (/js/modules/Bill)</h3>
+
+<ul>
+	<li>收费 <strong>#bill/charge</strong>
+
+		<ul>
+			<li>查询患者的诊疗记录，单击记录显示明细，<strong>可以修改明细数量进行收费</strong>，如果是会员会返回打折后返回的总费用。</li>
+		</ul></li>
+	<li>退费 <strong>#bill/refund</strong>
+
+		<ul>
+			<li>当前版本对单次收费记录只能全部退费。</li>
+		</ul></li>
+	<li>收费记录 <strong>#bill/searchCharge</strong>
+
+		<ul>
+			<li>查询收费记录。</li>
+		</ul></li>
+	<li>退费记录 <strong>#bill/searchRefund</strong>
+
+		<ul>
+			<li>查询退费记录。</li>
+		</ul></li>
+	<li>处方发药 <strong>#bill/dispense</strong>
+
+		<ul>
+			<li>对已收费的处方进行发药</li>
+		</ul></li>
+	<li>对账 <strong>#bill/settle</strong>
+
+		<ul>
+			<li>对收费员实收的总费用与明细核对。</li>
+		</ul></li>
+	<li>对账纪录 <strong>#bill/searchSettle</strong>
+
+		<ul>
+			<li>查询对账记录</li>
+		</ul></li>
+	<li>零售收费 <strong>#bill/retailPricing</strong>
+
+		<ul>
+			<li>可以是系统内的患者也可以自定义输入患者，零售药品</li>
+		</ul></li>
+	<li>零售记录 <strong>#bill/retailDrugRecord</strong> 
+
+		<ul>
+			<li>查询零售记录。</li>
+		</ul></li>
+</ul>
+
+<h3>5.药品 (/js/modules/Medicine)</h3>
+
+<ul>
+	<li>库存查询 <strong>#medicine/mcurStorage</strong> 
+
+		<ul>
+			<li>查询当前库存，药物以批次+药品编码为基本单位。</li>
+		</ul></li>
+	<li>药品预警 <strong>#medicine/mwarning</strong>
+
+		<ul>
+			<li>查询库存不足或者即将过期的药品。</li>
+			<li>可以设置药品预警提示的时间，频率以及条件（阈值），<strong>仍需调试</strong>，URI调试完成了但是后端短信没发。</li>
+		</ul></li>
+	<li>药品信息管理 <strong>#medicine/mdictionary</strong>
+
+		<ul>
+			<li>药品基础库，查询药物信息及说明书。</li>
+		</ul></li>
+	<li>供应商 <strong>#medicine/msupplier</strong>
+
+		<ul>
+			<li>curd供应商。</li>
+		</ul></li>
+	<li>采购入库 <strong>#medicine/minStorage</strong>
+
+		<ul>
+			<li>可以扫码或者查询选择药物。</li>
+		</ul></li>
+	<li>入库审核 <strong>#medicine/minCheck</strong>
+
+		<ul>
+			<li>对入库的项目进行审核。</li>
+		</ul></li>
+	<li>库存盘点 <strong>#medicine/mverify</strong>
+
+		<ul>
+			<li>顾名思义，盘点药物的数量变化。</li>
+		</ul></li>
+	<li>盘点日志 <strong>#medicine/mverifyLog</strong>
+
+		<ul>
+			<li>查询盘点数量的变化。</li>
+		</ul></li>
+	<li>库存变动查询 <strong>#medicine/mnumChange</strong>
+
+		<ul>
+			<li>宏观监测药品的数量变化，数量增加包括入库，盘点增加等，出库包括处方，零售，盘点减少等。</li>
+		</ul></li>
+	<li>药品调价 <strong>#medicine/mpriceChange</strong>
+
+		<ul>
+			<li>对药品进行调价。</li>
+		</ul></li>
+	<li>调价记录 <strong>#medicine/drugPriceAudit</strong></li>
+</ul>
+
+<h3>6.患者 (/js/modules/Patient)</h3>
+
+<ul>
+	<li>我的患者 <strong>#patient/patientClass</strong>
+
+		<ul>
+			<li>医生就诊过的所有患者。</li>
+			<li>可以对患者进行分组，设置分组条件后，患者自动归类到该组。</li>
+		</ul></li>
+	<li>医院患者 <strong>#patient/Hospitalpatients</strong>
+
+		<ul>
+			<li>显示医院患者，并可以对患者信息进行编辑。可以查看患者的历次就诊信息。</li>
+		</ul></li>
+	<li>科室患者 <strong>#patient/Patientsdepartment</strong>
+
+		<ul>
+			<li>显示当前登录医生所在科室就诊的全部患者，可以根据条件查询，当前版本不可用。</li>
+		</ul></li>
+	<li>添加患者 <strong>#patient/addpatient</strong>
+
+		<ul>
+			<li>与挂号处添加患者的逻辑相同。</li>
+		</ul></li>
+</ul>
+
+<h3>7. 办公 (/js/modules/Office)</h3>
+
+<ul>
+	<li>坐诊计划 <strong>#office/schedule</strong>
+
+		<ul>
+			<li>显示医生的坐诊计划。</li>
+		</ul></li>
+	<li>排班 <strong>#office/arrange</strong>
+
+		<ul>
+			<li>管理员对医生进行排版。</li>
+			<li>点击编辑后，点击表格单元格进行编辑。</li>
+			<li>点击确认后即提交。</li>
+		</ul></li>
+	<li>推送通知 <strong>#office/sendInfo</strong>
+
+		<ul>
+			<li>推送短通知</li>
+		</ul></li>
+	<li>我的通知 <strong>#office_historyMessage</strong>
+
+		<ul>
+			<li>查询自己收到的所有通知。</li>
+		</ul></li>
+	<li>全部通知 <strong>#office/allNews</strong>
+
+		<ul>
+			<li>仅管理员可见，查询所有发出的通知。</li>
+		</ul></li>
+	<li>发布动态 <strong>#office/postDynamicNews</strong>
+
+		<ul>
+			<li>仅管理员可见，发布医疗、平台动态。</li>
+		</ul></li>
+	<li>全部动态 <strong>#office/allDynamicNews</strong>
+
+		<ul>
+			<li>看到全部的动态。</li>
+		</ul></li>
+</ul>
+
+<h3>8. 会员 (/js/modules/Member)</h3>
+
+<ul>
+	<li>会员列表<strong>#member/memberList</strong>
+
+		<ul>
+			<li>curd会员信息，对会员进行充值。</li>
+		</ul></li>
+	<li>会员统计<strong>#member/memberStatistics</strong>
+
+		<ul>
+			<li>对会员充值消费的积分信息进行统计，<strong>当前版本没有调试，这个菜单暂时禁用，用户无法看到</strong>。</li>
+		</ul></li>
+	<li>会员等级<strong>#member/memberSetting</strong>
+
+		<ul>
+			<li>curd会员等级</li>
+		</ul></li>
+	<li>会员充值记录<strong>#member/memberRecord</strong>
+
+		<ul>
+			<li>记录、查询充值目录。</li>
+		</ul></li>
+</ul>
+
+<h3>9. 统计 (/js/modules/Stastitical)</h3>
+
+<ul>
+	<li>药品流水统计<strong>#statistical/InventoryContrast</strong>
+
+		<ul>
+			<li>记录每一次药品的销售。</li>
+		</ul></li>
+	<li>药品销售统计<strong>#statistical/drugsTo</strong>
+
+		<ul>
+			<li>记录每一次药品的销售。</li>
+		</ul></li>
+	<li>处方统计<strong>#statistical/prescriptionStatistics</strong>
+
+		<ul>
+			<li>记录医生开具处方数量，以及中西医处方的比例。</li>
+		</ul></li>
+	<li>收入/消费统计<strong>#statistical/yearReport</strong>
+
+		<ul>
+			<li>统计诊所一段时间的收入，以及患者产生的消费。</li>
+		</ul></li>
+	<li>药品采购统计<strong>#statistical/drugPurchase</strong>
+
+		<ul>
+			<li>统计诊所采购药物。</li>
+		</ul></li>
+	<li>医生订单统计<strong>#statistical/presltemByDoctor</strong>
+
+		<ul>
+			<li>统计医生每次订单的费用，记录医生开具订单流水。</li>
+		</ul></li>
+</ul>
+
+<h3>10.设置 (/js/modules/Setting)</h3>
+
+<ul>
+	<li>我的诊所 <strong>#setting/myClinic</strong>
+
+		<ul>
+			<li>显示当前诊所的注册信息。</li>
+		</ul></li>
+	<li>功能设置 <strong>#setting/functionSetting</strong>
+
+		<ul>
+			<li>对诊所功能的基础设置，目前可以进行四舍五入的设置，待扩展。</li>
+		</ul></li>
+	<li>修改个人信息 <strong>#setting/changePersonal</strong>
+
+		<ul>
+			<li>修改用户的基本信息，密码，头像，绑定手机。</li>
+		</ul></li>
+	<li>科室管理 <strong>#setting/departMange</strong>
+
+		<ul>
+			<li>增加，修改，编辑科室。</li>
+			<li>科室属于基础设置，没有科室或者删除科室会对用户管理，开处方等均产生影响。</li>
+		</ul></li>
+	<li>用户管理 <strong>#setting/userMange</strong>
+
+		<ul>
+			<li>添加用户，编辑用户信息，修改用户权限。</li>
+		</ul></li>
+	<li>角色权限设置 <strong>#setting/menuSet</strong>
+
+		<ul>
+			<li>crud角色信息，给角色设置相应的权限。属于管理后台功能，<strong>仅仅为了开发方便，才将此菜单放在当前版本中，后续应该转移到厚朴诊所信息系统的后台管理系统</strong>。</li>
+		</ul></li>
+	<li>挂号费用设置 <strong>#setting/registerFeeSet</strong>
+
+		<ul>
+			<li>设置医院各个级别医生 普通号、专家号的挂号费用。</li>
+		</ul></li>
+	<li>诊疗模板设置 <strong>#setting/recipeMaintain</strong>
+
+		<ul>
+			<li>curd诊断模板，医嘱模板，处方模板。</li>
+		</ul></li>
+	<li>检查项目设置 <strong>#setting/checkSet</strong>
+
+		<ul>
+			<li>curd诊疗项目</li>
+		</ul></li>
+	<li>字典表维护 <strong>#setting/dicTableMaintain</strong>
+
+		<ul>
+			<li>设置药品单位的字典。由平台维护，<strong>与生成处方关联</strong>，只有字典表中有相应的单位，保存处方才能成功。</li>
+		</ul></li>
+</ul>
+
+<ol id="footnotes">
+	<li id="fn1">/js/modules/viewModule/signin/login.js 中160-172行 <a href="#ffn1">&#x21A9;&#xFE0E;</a></li>
+	<li id="fn2">/js/jethisMain.js 79-111行即是根据权限生成菜单的逻辑 <a href="#ffn2">&#x21A9;&#xFE0E;</a></li>
+	<li id="fn3">位于/js/modules/Common/commonModel.js 11-37行，URI是/jethis/query/get <a href="#ffn3">&#x21A9;&#xFE0E;</a></li>
+</ol>

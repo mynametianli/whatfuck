@@ -1,0 +1,131 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*----margin,padding值-------*/
+.martop{ margin-top:1.5rem;}
+.mart{ margin-top:-0.25rem;}
+.mart1{ margin-top:1rem;}
+.mart2{ margin-top:0.35rem;}
+.marl{ margin-left:1.5rem;}
+.marl1{ margin-left:2.25rem;}
+.marlr{ margin:0 0.85rem;}
+.padlr{ padding:0.3rem 0.85rem;}
+.padl{ padding-left:0.5rem;}
+.padtb{ padding:0.3rem 0;}
+.padtb1{ padding:0.5rem 0;}
+.padtb2{ padding:4rem 0;}
+
+.ubb{ border-bottom:1px solid #e3e3e3;}
+.ubt{ border-top:1px solid #e3e3e3;}
+
+/*----背景颜色-------*/
+.bgwhit{ background-color:white;}
+.bglv{ background-color:#66CCCC;}
+.bgbm{ background-color:#CCFFFF;}
+.bgbm1{ background-color:#FFFFCC;}
+
+.lan{ color:#59ACE4;}
+.lv{ color:#00C9A7}
+.lv1{ color:#66CCCC;}
+.whit{ color:#FFF;}
+.hui{ color:#999999;}
+.hui1{ color:#666666;}
+.row a{ color:#666666;}
+
+.linh{ line-height:1.4rem}
+.linh1{ line-height:1.0rem;}
+.linh2{ line-height:5rem;}
+.font1{ font-size:1.2rem;}
+.font85{ font-size:0.85rem;}
+.font75{ font-size:0.75rem;}
+.font65{ font-size:0.65rem;}
+
+/*----图片大小控制-------*/
+.imgtu{ width:100%; height:auto;}
+.ewm{ max-width:6rem; max-height:6rem;}
+.tkimg{ width:2.8rem; height:2.8rem; border-radius:50%;}
+.tximg{ width:1.5rem; height:1.5rem; border-radius:50%;}
+.jdimg{ max-width:4.5rem; max-height:3.2rem;}
+.jdimg1{ max-height:0.85rem; margin-right:0.2rem;}
+.jdimg2{width:100%; max-height:8rem;}
+.smimg{ max-width:1.2rem; vertical-align:middle; margin:0 0.2rem 0.2rem 0;}
+.toptu{max-width:1.55rem; max-height:1.55rem;}
+.zcimg{ width:3.8rem; height:3.8rem; border-radius:0.1rem; border:1px solid #e3e3e3;}
+
+
+/*---------头部----------*/
+.bar { height:2.5rem;}
+.title{ line-height:2.5rem;}
+.bar .icon {padding: .6rem .1rem;}
+.bar-nav ~ .content { top: 2.5rem;}
+
+/*---------浅色按钮-------*/
+.button-danger.button-fill { color: #fff;background-color: #2696ec;}
+.button-danger.button-fill:active {background-color:#1180d6}
+.button-success {border-color: #009999; color: #009999;}
+.buttons-row .button.active{background-color: #66CCCC;color: #fff;}
+.buttons-row .button { border-color: #66CCCC; color: #66CCCC;}
+.button-success.button-fill{background-color: #66CCCC;color: #fff;}
+.button-success.button-fill:active{background-color: #009999;color: #fff;}
+
+.list-block .item-inner { padding-right: .75rem; position: relative;  width: 100%; padding-top: .7rem; padding-bottom: .6rem; padding-left: .75rem; }
+.list-block { margin: 0.25rem 0; font-size: .80rem;}
+.list-block .item-after {white-space: nowrap;color: #818181; font-size:0.7rem;}
+.list-block input[type="text"], .list-block input[type="password"], .list-block input[type="email"], .list-block input[type="tel"], .list-block input[type="url"], .list-block input[type="date"], .list-block input[type="datetime-local"], .list-block input[type="time"], .list-block input[type="number"], .list-block input[type="search"], .list-block select, .list-block textarea {color:#aaaaaa; font-size: .80rem;}
+.list-block .item-title.label { width: 25%;}
+.list-block .item-content {padding-left: 0;}.list-block .item-media + .item-inner {padding-left: .75rem; margin-left:0;}
+.list-block ul::before {height: 0;}
+.list-block .item-title { color: #232323;}
+
+.poab{ position:absolute; right:0.6rem; top:0.8rem;}
+.jgname{text-align:right; padding-bottom:1.1rem !important; font-size:0.7rem !important;}
+
+
+/*----------分享弹框-----------*/
+.tkfx ul{ width:100%; list-style:none; padding:0 0.75rem;background: rgba(243,243,243,.95); min-height:5.8rem;}
+.tkfx ul li{ width:25%; float:left; text-align:center; display:block; padding:0.5rem 0; font-size:0.8rem;}
+.actions-modal-button { font-size: 0.75rem; color: #999999;}
+
+/*-----table表格-----*/
+.stable{ width:100%;}
+.stable tr , .stable tr td , .stable tr th{ border:1px solid #e3e3e3; color:#999999; font-size:0.7rem; line-height:1.8rem;}
+.stable th{ background:#66CCCC; color:#FFF !important;}
+.stable tr:nth-of-type(odd){ background:#F5FAFA;} /* odd 标识奇数行，even标识偶数行 */
+.stable tr:hover{ background: #E0F0F0;} /*鼠标悬停后表格背景颜色*/
+
+/*------酒店预定列表-------*/
+.list-block.media-list .item-inner { padding-top: .8rem;}
+.list-block.media-list .item-title-row{ line-height:1.5rem;}
+.jdul .list-block{ margin:0;}
+
+.timeti{ width:5rem; background-color:#ededed; border:1px solid #e3e3e3; margin-left:0.25rem;}
+/*---加减房间数-----*/
+   /*加减人数*/
+.anuuu{ width: 1.5rem; height: 1.5rem; font-size: 0.80em; border: 0; border-radius: 0 !important;}
+.text_box{ background-color: #ededed; text-align: center; border: none !important;}
+.min,.add{ color: white; background-color: #66CCCC;}
+.fixed{position:fixed; bottom:0; z-index:1001; background:#f7f7f8; border-top:1px solid #e3e3e3; height:2.5rem; width:100%; line-height:2.5rem;}
+.tear{width:100%; font-size:0.65rem;}
+
+.tianqi{ width:100%; height:2.4rem; margin:0.5rem 0; padding:0;}
+.tianqi li{ list-style:none; float:left; width:50%; line-height:1.2rem;}
+.textr{ text-align:right;}
+
+/*.content-block { margin:0; padding: 1.75rem .75rem; color: #6d6d72;}*/
+.datu{position:absolute; width:100%; height:100%; z-index:-1}
+.ertu{position:fixed;width:100%; height:100%;}
+.bgbgtu{-webkit-filter:opacity(0.25); -o-filter:opacity(0.25); -mos-filter:opacity(0.25);filter:opacity(0.25);}
+#userInfo input[type=text]{
+  text-align: right!important;
+  }
+#orderRoom #hotCon .item-subtitle .pull-left img{
+  float: left;
+  display: none;
+}
+#orderRoom #hotCon .item-subtitle .pull-left .show{
+  display: block;
+}
+label.label-checkbox input[type=checkbox]:checked+.item-media i.icon-form-checkbox, label.label-checkbox input[type=radio]:checked+.item-media i.icon-form-checkbox{
+  border: none;
+  background-color: #66CCCC;
+}

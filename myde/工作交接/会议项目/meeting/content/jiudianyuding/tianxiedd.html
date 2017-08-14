@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>填写订单</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="orderWrite">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+                <h1 class="title">填写订单</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+                <div class="jdul font75 linh">
+                	<div class="ubb">
+                    	<div class="marlr padtb1">
+                            <div class="font85">酒店名字酒店名字</div>
+                            <div><span>入住时间<input type="text" class="timeti timestart" data-toggle='date'/></span><span class="marl">离店时间<input type="text" class="timeti timeend" data-toggle='date'/></span></div>
+                        </div>
+                    </div>
+                    <div class="ubb">
+                    	<div class="marlr padtb1">
+                        	<span>预订间数</span>
+                            <span class="pull-right mart">
+                                <input class="minrooms anuuu" name="" type="button" value="-" />
+                                <input class="text_box anuuu" name="" type="text" value="1" id="adultNum" readonly/>
+                                <input class="addrooms anuuu" name="" type="button" value="+" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ubb">
+                    	<div class="marlr padtb1">
+                            房型<span class="marl" id="roomType"></span>
+                        </div>
+                    </div>
+                    <div class="ubb">
+                    	<div class="marlr padtb1">
+                            <div>预订人信息</div>
+                            <div>姓名<span class="marl"><input type="text" class="timeti ordername" /></span></div>
+                            <div>手机<span class="marl"><input type="text" class="timeti ordertel" /></span></div>
+                        </div>
+                    </div>
+                    <div class="marlr padtb1 font65 hui linh1">
+                        预订提示：请于入住日当天12：00后办理入住，提前到店，视酒店具体情况安排。
+                    </div>
+                </div>
+                <div class="fixed">
+                	<div class="bar font75">
+                    	<div class="pull-left">订单金额：<span class="lv" id="roomMoeny"></span>元</div>
+                        <div class="pull-right"><a href="javascript:;" class="button button-fill button-success" id="orderSubmit">提交订单</a></div>
+                    </div>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/cominit.js"></script>
+
+  </body>
+</html>

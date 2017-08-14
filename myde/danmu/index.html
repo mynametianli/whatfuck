@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html, body, div, span, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		abbr, address, cite, code,
+		del, dfn, em, img, ins, kbd, q, samp,
+		small, strong, sub, sup, var,
+		b, i,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section, summary,
+		time, mark, audio, video {
+		    margin:0;
+		    padding:0;
+		    border:0;
+		    outline:0;
+		    font-size:100%;
+		    display:block;
+		    /* vertical-align:baseline; */
+		    background:transparent;
+		    box-sizing:border-box;
+		}
+		html{
+			height:100%;
+			width:100%;
+			font-size:20px;
+		}
+		body{
+			width:100%;
+			height:100%;
+			font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		}
+		.l{
+			float:left;
+		}
+		#all{
+			width:100%;
+			height:100%;
+			background:url('img/bg2.jpg') no-repeat center center;
+			background-size:cover;
+			position:relative;
+			overflow:hidden;
+			
+		}
+		.hjbox{
+			width:;
+			height:7.1rem;
+			position:absolute;
+			top:2rem;
+			right:0;
+			animation:showhj 6s linear forwards;
+			display:none;
+			/* animation: name duration timing-function delay iteration-count direction fill-mode play-state; */
+			/* animation:showhj 8s linear 6s/延迟 infinite/n reverse/是否反向播放 forwards/normal不循环动画完成后状态 paused/running暂停还是播放; */
+		}
+		.hj-y{
+			width:50.15rem;
+			height:3.2rem;
+			top:1.95rem;
+			left:11.6rem;
+			position:absolute;
+			z-index:4;
+			background:url('img/hjbg.png') no-repeat 0px 0px;
+		}
+		.text{
+			width:100%;
+			height:100%;
+			line-height:3.2rem;
+			padding-left:9rem;
+		}
+		.text > span{
+			display:block;
+			float:left;
+			height:100%;
+			line-height:3.2rem;
+			font-weight:bold;
+		}
+		.rtext,.ttext{
+			color:#f93833;
+			font-size:1.8rem;
+
+		}
+		.btext{
+			color:#000105;
+			font-size:1.2rem;
+			margin:0 .8rem;
+		}
+		.hj{
+			width:18.2rem;
+			height:7.1rem;
+			background:url('img/1.png') no-repeat 0px 0px;
+			position:absolute;
+			z-index:5;
+			top:0;
+			left:0;
+			animation:show .3s linear infinite alternate;
+		}
+		.wechat{
+			width:13.3rem;
+			height:13.3rem;
+			position:absolute;
+			bottom:0;
+			right:0;
+		}
+		.wechat > img{
+			display:block;
+			width:100%;
+			height:auto;
+		}
+		@keyframes show{
+			0%{
+				background:url('img/1.png') no-repeat 0px 0px;
+			}
+			20%{
+				background:url('img/2.png') no-repeat 0px 0px;
+			}
+			40%{
+				background:url('img/1.png') no-repeat 0px 0px;
+			}
+			60%{
+				background:url('img/2.png') no-repeat 0px 0px;
+			}
+			80%{
+				background:url('img/1.png') no-repeat 0px 0px;
+			}
+			100%{
+				background:url('img/2.png') no-repeat 0px 0px; 
+			}
+		}
+		@keyframes showhj{
+			0%{
+				right:0;
+			}
+			10%{
+				right:70rem;
+			}
+			20%{
+				right:70rem;
+			}
+			30%{
+				right:70rem;
+			}
+			40%{
+				right:70rem;
+			}
+			50%{
+				right:70rem;
+			}
+			60%{
+				right:80rem;
+			}
+			70%{
+				right:90rem;
+			}
+			80%{
+				right:120rem;
+			}
+			90%{
+				right:160rem;
+			}
+			100%{
+				right:200rem;
+			}
+		}
+
+
+		.barrage{
+			width:100%;
+			height:100%;
+			position:absolute;
+			top:0;
+			left:0;
+			background:transparent;
+			
+		}
+		@keyframes bar{
+			0%{
+				right:-40rem;
+			}
+			100%{
+				right:700rem;
+				display:none;
+			}
+		}
+		.demo{
+			position:absolute;
+			z-index:2;
+			
+		}
+		.dtt1{
+			top:2rem;
+			right:-40rem;
+		}
+		.head{
+			width:6.7rem;
+			height:6.7rem;
+			border-radius:50%;
+			border:0.2rem solid #fff;
+			background-size:'cover';
+			overflow:hidden;
+			margin-right:.75rem;
+		}
+		.bar-text{
+			min-width:4.8rem;
+			height:4.3rem;
+			margin-top:1.2rem;
+			line-height:4.3rem;
+			border-radius:2.15rem;
+			padding:0 2.15rem;
+			background:#fff;
+			font-size:2rem;
+		}
+		.ck,.ckj{
+			position:absolute;
+			z-index:9;
+		}
+		.ckj{
+			left:20rem;
+		}
+		#buf{
+			height:100%;
+			width:20rem;
+			position:absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			margin:auto;
+			z-index:3;
+			opacity:0;
+			/* transition:all 1s linear; */
+		}
+		.vv{
+			position:absolute;
+			z-index:1;
+		}
+		.myhead{
+			width:100%;
+			height:100%;
+		}
+	</style>
+	<script type='text/javascript' src='js/jquery.js'></script>
+</head>
+<body>
+	
+	<div id='all'>
+		<div class='vv'>
+			<!-- <video width="900" height="668" loop="loop" autoplay style=" margin-left:65px;">
+				                      		<source src="shipin1.mov" type="video/mp4" />
+				                         </video> -->
+	                         
+		</div>
+		<div class="wechat">
+			<img src="img/wechat.png" alt=""/>
+		</div>
+		<div class="hjbox">
+			<div class="hj-y">
+				<div class='text'><span class='rtext'></span><span class='btext'>送了一发火箭</span><span class='ttext'></span></div>		
+			</div>
+			<div class="hj"></div>
+		</div>
+		<div class='demo dtt1'>
+			<div class="head l">
+				<img class='myhead' src="" alt="">
+			</div>
+			<div class='bar-text l'></div>
+		</div>
+
+		<!-- <button class='ck'>click</button> -->
+		<button class='ckj'>送火箭</button>
+		<div id = 'buf'>
+			<object classid="clsid27CDB6E-AE6D-11cf-96B8-444553540000"codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"width="100%" height="100%" align="center" id='myswfs'>
+			<param name="movie" value="dh.swf">
+			<param name="quality" value="high">
+			<param name="autoplay" value="false">
+			<param name="play" value="false">
+			<param name="loop" value="false">
+			<param name="wmode" value="transparent">
+			<embed src="dh.swf" width="100%" height="100%"align="center" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" loop='false' play='false' autoplay='false' name='myswf' wmode="transparent"></embed>
+			</object>
+		</div>
+	</div>
+
+	<script>
+		;
+		//弹幕
+		var i = 1;
+		var demo = $('.demo').clone();
+		var box = $('#all');
+		var darr = [];
+		var dtimer;
+		var dinx = 0;//当前循环播放的下标
+		var speddarr = [13000,14000,15000,16000,17000,18000,19000,10000];//弹幕速度
+		var toparr = ['0','10rem','20rem','30rem','40rem'];//弹幕高度
+		var color = '#474747';//字体颜色
+		var bgcolor = 'rgba(255,255,255,1)';//背景颜色
+		//火箭
+		var  hjbox = $('.hjbox').clone();
+		var rk = 0;//确定当前火箭队列
+		var fs = $('#buf').clone();
+		var arr = [];//存储名称
+		var person = [];
+		//websocket
+		var ws= new WebSocket('wss://bar.rulaimedia.com/dan_mu');
+		ws.onopen = function(){
+			// ws.send('22');
+		}
+		ws.onmessage = function (evt){
+			let data  = eval('('+evt.data+')');
+			if(data.status_code == 200){
+				if(data.msg_type == 2){
+					clearTimeout(dtimer);
+					let img = data.content.user_info.avatar_url;
+					let text = data.content.message;
+					let obj = {
+						img:img,
+						text:text
+					}
+					if(darr.length < 10){
+						darr.push(obj);
+					}else{
+						if(dinx > 0){
+							dinx-=1;
+						}
+						darr.shift();
+						darr.push(obj);
+					}
+					danmu(obj);
+				}
+				if(data.msg_type == 3){
+					let name = data.content.user_info.nick_name;
+					let id =  data.content.user_info.openid;
+					let pt = {
+							id:id,
+							num:1,
+							name:name
+						}
+					let mypt = {
+							id:id,
+							num:1,
+							name:name
+					}
+					let ps = true;
+					if(person.length > 0){
+						for(let i in person){
+							if(person[i].id === pt.id){
+								ps = false;
+								person[i].num +=1;
+								pt.num = person[i].num;
+							}
+						}
+						if(ps){
+							person.push(mypt);
+						}
+					}else{
+						person.push(mypt);
+						
+					}
+					console.log(person);
+					rocket(pt);
+					
+				}
+			}	
+		}
+		 ws.onclose = function(){ 
+	                  /*alert("连接已关闭..."); */
+	              };
+		/*$.fn.extend({  
+		        dm:function(options){  
+		            var defaults = {color:'blue', size: "30px"};  
+		            options = $.extend({},defaults, options);  
+		            return $(this).each(function(){  
+		                $(this).css({'color':options.color});  
+		                $(this).css({'font-size':options.size});  
+		            });  
+		        }  
+		}); */
+		$('.ckj').click(function(){
+			setTimeout(function(){
+				rocket({id:'22',num:1,name:'我的荣耀'});
+			},0);
+			let obj = {
+				img:'',
+				text:'haha'+dinx
+			}
+			clearTimeout(dtimer);
+			if(darr.length < 10){
+				darr.push(obj);
+			}else{
+				if(dinx > 0){
+					dinx-=1;
+				}
+				darr.shift();
+				darr.push(obj);
+			}
+			danmu({img:'',text:'呵呵'});
+		});
+		function rocket(pt){
+			//let pt = pt;
+			rk+=1;
+			if(rk == 1){	
+				sendrk(pt);
+			}else{
+				arr.push(pt);
+			}
+			console.log(arr);
+		}
+		function sendrk(pt){
+			let myswf = document.myswf;
+			$('#buf').animate({opacity:'1'},1000,'linear',function(){})
+			myswf.Play();
+			if(pt.num>1){
+				hjbox.clone().show().appendTo(box).css('top',top).find('.rtext').text(pt.name).end().find('.ttext').text("X"+pt.num);
+			}else{
+				hjbox.clone().show().appendTo(box).css('top',top).find('.rtext').text(pt.name).end();
+			}
+			setTimeout(function(){
+				$('#buf').animate({opacity:'0'},1000,'linear',function(){
+					/*hjbox.clone().show().appendTo(box).css('top',top).find('.rtext').text(name);*/
+					rk-=1;
+					if(rk >= 1){
+					      $('#buf').css('opacity','0');
+					      myswf.Rewind();      
+					      sendrk(arr[0]);
+					      arr = arr.slice(1);
+					}
+				});
+			
+			},3200)
+		}
+		function danmu(obj){
+			/*console.log(img,text);
+			return;*/
+			//var length = 8;
+			//var bt = true;
+			//var base = "我我啊的我的挨打是是是是是是啊绿色科技的阿莱克斯酒店垃圾阿莱克斯酒店了";
+			/*var h = parseInt($('.bar-text').css('width')) + 2;
+			var m = parseInt($('.demo').css('width'))+2;*/
+			if(toparr.length < 1){
+				toparr = ['0','10rem','20rem','30rem','40rem'];
+			}
+			let t = toparr.length;//toparr长度
+			let n = Math.ceil(Math.random() * t) - 1;//top下标
+			let rt = toparr[n];//top
+			/*$('.bar-text').css('min-width',null);
+			$('.bar-text').css('width',(h+'px'));
+			$('.demo').css('width',(m+'px')).addClass('bard');*/
+			//var m = Math.ceil(Math.random()*40);
+			//var txt = text;截取字符串
+			//var color = `rgba(${Math.ceil(Math.random() * 255)},${Math.ceil(Math.random() * 255)},${Math.ceil(Math.random() * 255)},${Math.random()*1})`;字体颜色
+			//var bgcolor = `rgba(${Math.ceil(Math.random() * 255)},${Math.ceil(Math.random() * 255)},${Math.ceil(Math.random() * 255)},1)`;//背景颜色
+			//bt = false;
+			demo.clone().appendTo(box).removeClass('dtt1').css("top",rt).addClass('ad'+i).find('.bar-text').text(obj.text);
+			let h = parseInt($('.ad'+i).find('.bar-text').css('width')) + 6;//text width
+			let m = parseInt($('.ad'+i).css('width'))+6;//demo width
+			let r  = "-"+(m / 20) + 'rem'; //初始化right
+			let speed = speddarr[Math.ceil(Math.random() * 8) - 1];//速度获取
+			$('.ad'+i).css('right',r);
+			$('.ad'+i).find('.bar-text').css({minWidth:null,color:color,backgroundColor:bgcolor});
+			$('.ad'+i).find('.bar-text').css('width',(h+'px'));
+			$('.ad'+i).find('.head').css({borderColor:bgcolor}).find('.myhead').attr('src',obj.img);
+			$('.ad'+i).css('width',(m+'px'));
+			$('.ad'+i).animate({right:'100%'},speed,'linear',function(){
+				$(this).remove();
+			})
+			i++;
+			toparr.splice(n,1);
+			dtimer = setTimeout(function(){
+				danmu(darr[dinx]);
+				if(dinx < darr.length-1){
+					dinx+=1;
+				}else{
+					dinx = 0;
+				}
+			},3000);
+			
+		}
+	</script>
+</body>
+</html>

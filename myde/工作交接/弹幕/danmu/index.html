@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html, body, div, span, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		abbr, address, cite, code,
+		del, dfn, em, img, ins, kbd, q, samp,
+		small, strong, sub, sup, var,
+		b, i,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section, summary,
+		time, mark, audio, video {
+		    margin:0;
+		    padding:0;
+		    border:0;
+		    outline:0;
+		    font-size:100%;
+		    display:block;
+		    /* vertical-align:baseline; */
+		    background:transparent;
+		    box-sizing:border-box;
+		}
+		html{
+			height:100%;
+			width:100%;
+			font-size:20px;
+			font-weight:bold;
+		}
+		body{
+			width:100%;
+			height:100%;
+			font-family: '微软雅黑', Helvetica, Arial, sans-serif;
+			padding-right:.9rem;
+			background:#000;
+		}
+		.l{
+			float:left;
+		}
+		#all{
+			width:100%;
+			height:100%;
+			/* background:url('img/bg2.jpg') no-repeat center center; */
+			background:#000;
+			background-size:100% 100%;
+			position:relative;
+			overflow:hidden;
+			
+		}
+		.hjbox,.hjbox2,.hjbox1{
+			width:;
+			height:7.1rem;
+			position:absolute;
+			top:2rem;
+			right:0;
+			animation:showhj 6s linear forwards;
+			display:none;
+		}
+		.hj-y{
+			width:50.15rem;
+			height:3.2rem;
+			top:1.95rem;
+			left:11.6rem;
+			position:absolute;
+			z-index:4;
+			background:url('img/hjbg.png') no-repeat 0px 0px;
+		}
+		.hjbox1 .hj-y{
+			top:3.5rem;
+		}
+		.text{
+			width:100%;
+			height:100%;
+			line-height:3.2rem;
+			padding-left:9rem;
+		}
+		.text > span{
+			display:block;
+			float:left;
+			height:100%;
+			line-height:3.2rem;
+			font-weight:bold;
+		}
+		.rtext,.ttext{
+			color:#f93833;
+			font-size:1.8rem;
+
+		}
+		.btext{
+			color:#000105;
+			font-size:1.2rem;
+			margin:0 .8rem;
+		}
+		.hj{
+			width:18.2rem;
+			height:7.1rem;
+			background:url('img/1.png') no-repeat 0px 0px; 
+			position:absolute;
+			background-size:100% 100%;
+			z-index:5;
+			top:0;
+			left:0;
+			animation:show .3s linear infinite alternate;
+		}
+		.hj1{
+			width:8.35rem;
+			height:6.7rem;
+			background:url('img/666.png') no-repeat 0px 0px;
+			position:absolute;
+			background-size:100% 100%;
+			z-index:5;
+			top:0.3rem;
+			left:4.85rem;
+		}
+		.hj2{
+			width:4.9rem;
+			height:6.45rem;
+			background:url('img/ht.png') no-repeat 0px 0px;
+			position:absolute;
+			background-size:100% 100%;
+			z-index:5;
+			top:0.325rem;
+			left:9.3rem;
+
+		}
+		.wechat{
+			width:13.3rem;
+			height:13.3rem;
+			position:absolute;
+			bottom:0;
+			right:0;
+		}
+		.wechat > img{
+			display:block;
+			width:100%;
+			height:auto;
+		}
+		@keyframes show{
+			0%{
+				background:url('img/1.png') no-repeat 0px 0px;
+				background-size:100% 100%;
+			}
+			20%{
+				background:url('img/2.png') no-repeat 0px 0px;
+				background-size:100% 100%;
+			}
+			40%{
+				background:url('img/1.png') no-repeat 0px 0px;
+				background-size:100% 100%;
+			}
+			60%{
+				background:url('img/2.png') no-repeat 0px 0px;
+				background-size:100% 100%;
+			}
+			80%{
+				background:url('img/1.png') no-repeat 0px 0px;
+				background-size:100% 100%;
+			}
+			100%{
+				background:url('img/2.png') no-repeat 0px 0px; 
+				background-size:100% 100%;
+			}
+		}
+		@keyframes showhj{
+			0%{
+				right:0;
+			}
+			10%{
+				right:70rem;
+			}
+			20%{
+				right:70rem;
+			}
+			30%{
+				right:70rem;
+			}
+			40%{
+				right:70rem;
+			}
+			50%{
+				right:70rem;
+			}
+			60%{
+				right:80rem;
+			}
+			70%{
+				right:90rem;
+			}
+			80%{
+				right:120rem;
+			}
+			90%{
+				right:160rem;
+			}
+			100%{
+				right:200rem;
+			}
+		}
+
+
+		.barrage{
+			width:100%;
+			height:100%;
+			position:absolute;
+			top:0;
+			left:0;
+			background:transparent;
+			
+		}
+		@keyframes bar{
+			0%{
+				right:-40rem;
+			}
+			100%{
+				right:700rem;
+				display:none;
+			}
+		}
+		.demo{
+			position:absolute;
+			z-index:2;
+			
+		}
+		.dtt1{
+			top:2rem;
+			right:-40rem;
+		}
+		.head{
+			width:4.3rem;
+			height:4.3rem;
+			border-radius:50%;
+			border:0.2rem solid #fff;
+			background-size:'cover';
+			overflow:hidden;
+			margin:1.2rem .75rem 1.2rem 0;
+		}
+		.bar-text{
+			min-width:4.8rem;
+			height:3.2rem;
+			margin-top:1.75rem;
+			line-height:3.2rem;
+			border-radius:1.6rem;
+			padding:0 2.15rem;
+			background:#fff;
+			font-size:2rem;
+			text-align:center;
+		}
+		.ck,.ckj{
+			position:absolute;
+			z-index:9;
+		}
+		.ckj{
+			left:20rem;
+		}
+		#buf,#buf1,#buf2{
+			height:100%;
+			width:20rem;
+			position:absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			margin:auto;
+			z-index:3;
+			opacity:0;
+			/* transition:all 1s linear; */
+		}
+		.vv{
+			position:absolute;
+			z-index:1;
+			width:100%;
+			height:100%;
+		}
+		video{
+
+		}
+		.myhead{
+			width:100%;
+			height:100%;
+		}
+	</style>
+	<script type='text/javascript' src='js/jquery.js'></script>
+	<script type='text/javascript'>
+	     /* function getWindow(){
+	      	let w = $(window).innerWidth();
+	      	let x = w / 1920;
+	      	let m = (20 * x).toFixed(2);
+	      	$('html').css('font-size',m+'px');
+
+	      }
+	      getWindow();
+	      window.onresize = function(){
+	      	getWindow();
+	      }*/
+	</script>
+</head>
+<body>
+	
+	<div id='all'>
+		<div class='vv'>
+			<video width="100%" height="100%" loop="loop" autoplay id='myvideo' src="绿皮乐队.mp4" type="video/mp4" >
+				                      		
+				                         </video>
+	                         
+		</div>
+		<!-- <div class="wechat">
+			<img src="img/wechat.png" alt=""/>
+		</div> -->
+		<div class="hjbox">
+			<div class="hj-y">
+				<div class='text'><span class='rtext'></span><span class='btext'>送了一发火箭</span><span class='ttext'></span></div>		
+			</div>
+			<div class="hj">
+			
+			</div>
+		</div>
+		<div class="hjbox1">
+			<div class="hj-y">
+				<div class='text'><span class='rtext'></span><span class='btext'>送了一个666</span><span class='ttext'></span></div>		
+			</div>
+			<div class="hj1">
+			
+			</div>
+		</div>
+		<div class="hjbox2">
+			<div class="hj-y">
+				<div class='text'><span class='rtext'></span><span class='btext'>送了一只金话筒</span><span class='ttext'></span></div>		
+			</div>
+			<div class="hj2">
+			
+			</div>
+		</div>
+		<div class='demo dtt1'>
+			<div class="head l">
+				<img class='myhead' src="" alt="">
+			</div>
+			<div class='bar-text l'></div>
+		</div>
+
+		<!-- <button class='ck'>click</button> -->
+		<!-- <button class='ckj'>送火箭</button> -->
+		<div id = 'buf'>
+			<object classid="clsid27CDB6E-AE6D-11cf-96B8-444553540000"codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"width="100%" height="100%" align="center" id='myswfs'>
+			<param name="movie" value="img/dh.swf">
+			<param name="quality" value="high">
+			<param name="autoplay" value="false">
+			<param name="play" value="false">
+			<param name="loop" value="false">
+			<param name="wmode" value="transparent">
+			<embed src="img/dh.swf" width="100%" height="100%"align="center" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" loop='false' play='false' autoplay='false' name='myswf' wmode="transparent"></embed>
+			</object>
+		</div>
+		<div id = 'buf1'>
+			<object classid="clsid27CDB6E-AE6D-11cf-96B8-444553540000"codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"width="100%" height="100%" align="center" id='myswfs1'>
+			<param name="movie" value="img/666.swf">
+			<param name="quality" value="high">
+			<param name="autoplay" value="false">
+			<param name="play" value="false">
+			<param name="loop" value="false">
+			<param name="wmode" value="transparent">
+			<embed src="img/666.swf" width="100%" height="100%"align="center" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" loop='false' play='false' autoplay='false' name='myswf1' wmode="transparent"></embed>
+			</object>
+		</div>
+		<div id = 'buf2'>
+			<object classid="clsid27CDB6E-AE6D-11cf-96B8-444553540000"codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"width="100%" height="100%" align="center" id='myswfs'>
+			<param name="movie" value="img/ht.swf">
+			<param name="quality" value="high">
+			<param name="autoplay" value="false">
+			<param name="play" value="false">
+			<param name="loop" value="false">
+			<param name="wmode" value="transparent">
+			<embed src="img/ht.swf" width="100%" height="100%"align="center" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" loop='false' play='false' autoplay='false' name='myswf2' wmode="transparent"></embed>
+			</object>
+		</div>
+	</div>
+
+	<script>
+		;
+		//弹幕
+		var i = 1;
+		var demo = $('.demo').clone();
+		var box = $('#all');
+		var darr = [];//弹幕循环数组
+		var dtimer;//循环播放弹幕的定时器
+		var dinx = 0;//当前循环播放弹幕的下标
+		var speddarr = [13000,14000,15000,16000,17000,18000,19000,10000];//弹幕速度
+		var toparr =  ['2em','8rem','14rem','20rem','26rem','32rem','38rem'];//弹幕高度
+		var color = '#474747';//字体颜色
+		var bgcolor = 'rgba(255,255,255,1)';//背景颜色
+		//火箭
+		var rk = 0;//确定当前火箭队列
+		var fs = $('#buf').clone();
+		var arr = [];//存储名称
+		var person = [];//存贮送过礼物的人的信息
+		//websocket
+		var ws= new WebSocket('wss://bar.rulaimedia.com/dan_mu');
+		ws.onopen = function(){
+			// ws.send('22');
+		}
+		var  ai = 0;//礼物动画盒子标记
+		ws.onmessage = function (evt){
+			//let data  = eval('('+evt.data+')');
+			let data = JSON.parse(evt.data);
+			if(data.status_code == 200){
+				if(data.msg_type == 2){//弹幕
+					clearTimeout(dtimer);
+					let img = data.content.user_info.avatar_url;
+					let text = data.content.message;
+					let obj = {
+						img:img,
+						text:text
+					}
+					if(darr.length < 10){
+						darr.push(obj);
+					}else{
+						if(dinx > 0){
+							dinx-=1;//下一次循环的弹幕的下标，没有太大意义
+						}
+						darr.shift();
+						darr.push(obj);
+					}//取10条弹幕循环,小于10条的时候只往数组添加,超过10条前面取出，后面添加
+					danmu(obj);
+				}
+				if(data.msg_type == 3){//礼物
+					let name = data.content.user_info.nick_name;//送礼人的姓名
+					let id =  data.content.user_info.openid;//送礼人ID，作为判断标识
+					let type = data.content.message.gift_type;//礼物类型
+					let pts = {
+							id:id,
+							num:1,
+							type:type,
+							name:name
+						}
+					let mypt = {
+							id:id,
+							num:1,
+							type:type,
+							name:name
+					}
+					let ps = true;
+					if(person.length > 0){
+						for(let i in person){
+							//判断送礼人以及送的礼物类型是否和记录匹配，匹配则送出礼物的数量num+1；没有则添加新的对象
+							if(person[i].id === pts.id && person[i].type === pts.type){
+								ps = false;
+								person[i].num +=1;
+								pts.num = person[i].num;
+								
+							}
+						}
+						if(ps){
+							person.push(mypt);
+						}
+					}else{
+						person.push(mypt);//第一个送礼人，添加新对象
+					}
+					rocket(pts);	
+				}
+			}	
+		}
+		 ws.onclose = function(){ 
+		 	ws= new WebSocket('wss://bar.rulaimedia.com/dan_mu');
+	              };
+		/*$('.ckj').click(function(){
+			setTimeout(function(){
+				rocket({id:'22',num:1,name:'我的荣耀'});
+			},0);
+			let obj = {
+				img:'',
+				text:'haha'+dinx
+			}
+			clearTimeout(dtimer);
+			if(darr.length < 10){
+				darr.push(obj);
+			}else{
+				if(dinx > 0){
+					dinx-=1;
+				}
+				darr.shift();
+				darr.push(obj);
+			}
+			danmu({img:'',text:'呵呵'});
+		});*/
+		function rocket(pta){
+			//let pt = pt;
+			rk+=1;
+			if(rk == 1){	
+				sendrk(pta);//当前没有动画执行，立即执行动画
+			}else{
+				arr.push(pta);//当前有动画正在执行，加入动画队列
+			}
+		}
+		function sendrk(ptb){
+			//let myswf = document.myswf;
+			//$('#buf').animate({opacity:'1'},1000,'linear',function(){})
+			$('#buf ,#buf1,#buf2').css('opacity','0');//送礼物的不同动画
+			let myswf,dom,hjbox;
+			//根据礼物类型，添加不同的动画效果
+			switch(ptb.type){
+				case('666'):
+					 myswf = document.myswf1;
+					 dom = $('#buf1');
+					$('#buf1').animate({opacity:'1'},1000,'linear',function(){});
+					hjbox = $('.hjbox1').clone();
+				break;
+				case('mc'):
+					 myswf = document.myswf2;
+					$('#buf2').animate({opacity:'1'},1000,'linear',function(){});
+					dom = $('#buf2');
+					hjbox = $('.hjbox2').clone();
+				break;
+				case('rocket'):
+					 myswf = document.myswf;
+					$('#buf').animate({opacity:'1'},1000,'linear',function(){});
+					dom = $('#buf');
+					hjbox = $('.hjbox').clone();
+				break;
+				default:
+				break;			
+			}
+			myswf.Play();
+			let  _this = hjbox.clone();
+			ai += 1;//标记动画盒子
+			if(ptb.num>1){
+				_this.show().appendTo(box).css('top',top).addClass('hjjj'+ai).find('.rtext').text(ptb.name).end().find('.ttext').text("X"+ptb.num);
+			}else{
+				_this.show().appendTo(box).css('top',top).addClass('hjjj'+ai).find('.rtext').text(ptb.name).end().find('.ttext').text('');
+			}
+			setTimeout(function(){
+				dom.animate({opacity:'0'},1000,'linear',function(){
+					/*hjbox.clone().show().appendTo(box).css('top',top).find('.rtext').text(name);*/
+					if(ai > 1){
+						$('.hjjj'+(ai-1)).remove();//清除多余的火箭dom
+					}
+					rk-=1;
+					myswf.Rewind(); 
+					if(rk >= 1){    
+					      sendrk(arr[0]);//礼物队列存在，继续下一次礼物动画
+					      arr.shift();
+					}
+				})
+			},3200);
+		}
+		function danmu(obj){
+			if(toparr.length < 1){
+				toparr = ['2em','8rem','14rem','20rem','26rem','32rem','38rem'];
+			}
+			let t = toparr.length;//toparr长度
+			let n = Math.ceil(Math.random() * t) - 1;//top下标
+			let rt = toparr[n];//top
+			demo.clone().appendTo(box).removeClass('dtt1').css("top",rt).addClass('ad'+i).find('.bar-text').text(obj.text);//添加弹幕demo盒子
+			let h = parseInt($('.ad'+i).find('.bar-text').css('width')) + 4;//text width
+			let m = parseInt($('.ad'+i).css('width'))+6;//demo width
+			let r  = "-"+(m / 20) + 'rem'; //初始化right
+			let speed = speddarr[Math.ceil(Math.random() * 8) - 1];//速度获取
+			$('.ad'+i).css('right',r);//设置初始r位置
+			$('.ad'+i).find('.bar-text').css({minWidth:null,color:color,backgroundColor:bgcolor});//设置颜色，当前默认只有一个颜色
+			$('.ad'+i).find('.bar-text').css('width',(h+'px'));//设置text宽度
+			$('.ad'+i).find('.head').css({borderColor:bgcolor}).find('.myhead').attr('src',obj.img);//头像们获取及头像边框颜色设置
+			$('.ad'+i).css('width',(m+'px'));//设置demo盒子宽度
+			$('.ad'+i).animate({right:'100%'},speed,'linear',function(){
+				$(this).remove();//弹幕动画完成后删除自己
+			})
+			i++;
+			toparr.splice(n,1);//使用过的top值移除，避免重复出现在同一位置
+			dtimer = setTimeout(function(){//3秒没有新的弹幕，循环最新10条弹幕
+				danmu(darr[dinx]);
+				//弹幕循环下标，超过了当前数组最大的时候重置为0
+				if(dinx < darr.length-1){
+					dinx+=1;
+				}else{
+					dinx = 0;
+				}
+			},3000);//视屏循环播放
+			
+		}
+		var varr = ['绿皮乐队.mp4','逆行者.mp4','把门抵住logo版.mp4'];//控制视屏播放
+		$(window).on('keydown',function(e){
+			if(e.keyCode == '32'){
+				let m = varr.shift();
+				varr.push(m);
+				document.getElementById('myvideo').src = varr[0];
+				return false;
+			}	
+		})//监听空格，按下后换到下一个视屏背景
+	</script>
+</body>
+</html>

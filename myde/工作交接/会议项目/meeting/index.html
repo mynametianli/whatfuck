@@ -1,0 +1,151 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>报名</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="css/index.css">
+      <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DGKqxPOZSSgNmKeQawyVcjtsTKkAIqTT"></script>
+      <script type="text/javascript" src="js/template.js"></script>
+
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="ruIndex">
+        
+        	<!-- 标题栏 -->
+            <header class="bar bar-nav">
+                <h1 class="title">报名</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+        
+            <div class="content">
+              <div class="list-block hui">
+                <ul>
+                  <!-- Text inputs -->
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">公司</div>
+                        <div class="item-input">
+                          <input type="text" id="ru_company" disabled>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">姓名</div>
+                        <div class="item-input">
+                          <input type="text" id="ru_name" disabled>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">电话</div>
+                        <div class="item-input">
+                          <input type="text" id="ru_phone" disabled>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="content-block">
+                  <a href="javascript:;" class="button button-big button-fill button-success" id="joinMeet" disabled>参会</a>
+              </div>
+           </div>
+        </div>
+    </div>
+
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script>
+        var ifacc=0;
+        function indexInit(){
+            $.ajax({
+                type: "get",
+                url: "http://192.168.0.118:8000/conference/get_in/201605230001/18288888888/",
+                data:{},
+                success: function(result){
+                    if(result!="None"){
+                        $("#ru_company").val(result.company);
+                        $("#ru_name").val(result.name);
+                        $("#ru_phone").val(result.phone);
+                        $.cookie("userName", encodeURI(result.name));
+                        $.cookie("userPhone", result.phone);
+
+                    }else{
+                        ifacc=1;
+                        $("#ru_company").removeAttr("disabled");
+                        $("#ru_name").removeAttr("disabled");
+                        $("#ru_phone").removeAttr("disabled");
+                        $("#ru_company").attr("placeholder","请填写所在公司");
+                        $("#ru_name").attr("placeholder","请填写您的姓名");
+                        $("#ru_phone").attr("placeholder","请填写个人职位");
+                    }
+                },
+                error: function(res){
+                    console.log("请求失败");
+                }
+            })
+            $("#joinMeet").click(function(){
+//                if(!ifacc){
+                    $.ajax({
+                        type: "get",
+                        url: "http://192.168.0.118:8000/conference/commit/201605230001/18288888888/",
+                        data:{},
+                        success: function(result){
+                            if(result.two_code) {
+                                var code = "http://192.168.3.220:8082"+result.two_code;
+                                $.cookie("twoCode", code);
+                            }
+                            $.cookie("authCode",result.auth_code);
+                            $.router.load("qr/qr.html");
+                        },
+                        error: function(res){
+                            console.log("请求失败");
+                        }
+                    });
+//                }else{
+//                    //未受邀请提交
+//                    debugger
+//                    var data={
+//                        "organization_name":$("#ru_company").val().trim(),
+//                        "name":$("#ru_name").val().trim(),
+//                        "mobile_phone":$("#ru_phone").val().trim()
+//                    }
+//                    $.ajax({
+//                        type: "post",
+//                        url: "http://192.168.0.118:8000/conference/commit/201605230001/",
+//                        data:JSON.stringify(data),
+//                        success: function(res){
+//                            if(res.result=="OK"){
+//                                $.alert("您的申请已收到,正在审核");
+//                            }else{
+//                                $.alert("您已申请");
+//                            }
+//                        },
+//                        error: function(res){
+//                            console.log("请求失败");
+//                        }
+//                    })
+//                }
+            })
+        }
+    </script>
+    <script type="text/javascript" src="js/cominit.js"></script>
+  </body>
+</html>

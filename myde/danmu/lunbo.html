@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	   	*{
+	   		padding:0;
+	   		margin:0;
+	   	}
+		#box,.box{
+			width:100px;
+			height:100px;
+			box-sizing:border-box;
+			overflow:hidden;
+		}
+		#box{
+			position:relative;
+		}
+		.allbox{
+			width:800px;
+			height:100px;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+		.l{
+			float:left;
+		}
+		.allbox .box:nth-of-type(1){
+			background:yellow;
+		}
+		.allbox .box:nth-of-type(2){
+			background:red;
+		}
+		.allbox .box:nth-of-type(3){
+			background:blue;
+		}
+		.allbox .box:nth-of-type(4){
+			background:green;
+		}
+		.allbox .box:nth-of-type(5){
+			background:yellow;
+		}
+		.allbox .box:nth-of-type(6){
+			background:red;
+		}
+		.allbox .box:nth-of-type(7){
+			background:blue;
+		}
+		.allbox .box:nth-of-type(8){
+			background:green;
+		}
+
+		.nowhx { margin:3px; width:40px; height:40px;
+		        position:absolute; left:0px; top:30px; 
+		        background:green; display:none; }
+		  div.newcolor { background:blue; }
+		  span { color:red; }
+	             #buf{
+	             	width:300px;
+	             	height:300px;
+	             }
+	</style>
+	<script type='text/javascript' src='js/jquery.js'></script>
+</head>
+<body>
+	<div id="box">
+		<div class='allbox'>
+			<div class="box l">1</div>
+			<div class="box l">2</div>
+			<div class="box l">3</div>
+			<div class="box l">4</div>
+			<div class="box l">1</div>
+			<!-- <div class="box l">2</div>
+			<div class="box l">3</div>
+			<div class="box l">4</div> -->
+		</div>
+	</div>
+	<button class='bt'>哈哈</button>
+
+
+	<button id="show">Show Length of Queue</button>
+	<span></span>
+	<div class='nowhx'></div>
+	<div id = 'buf'>
+			<object classid="clsid27CDB6E-AE6D-11cf-96B8-444553540000"codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"width="100%" height="100%" align="center" id='myswfs'>
+			<param name="movie" value="dh.swf">
+			<param name="quality" value="high">
+			<param name="autoplay" value="false">
+			<param name="play" value="false">
+			<param name="loop" value="false">
+			<param name="wmode" value="transparent">
+			<embed src="dh.swf" width="100%" height="100%"align="center" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer";;;type="application/x-shockwave-flash" loop='false' play='false' autoplay='false' name='myswf'></embed>
+			</object>
+	</div>
+	<button class='run'>播放</button><button class='pause'>暂停</button>
+	<br/>
+	<button class='yc'>延迟</button>
+	<script>
+		var i = 0;
+		var myswf = document.myswf;
+		$('.run').on('click',function(){
+			myswf.Play();
+		})
+		$('.pause').on('click',function(){
+			myswf.Rewind();
+		})
+		$('.pause').on('keydown',function(e){
+			alert(e.keyCode);
+		})
+		$('.yc').on('click',function(){
+			i++;
+			console.log(i,+new Date());
+			setTimeout(function(){
+				console.log(+new Date())
+			},i*1000)
+		})
+	</script>
+	<script type='text/javascript'>
+	var allbox =document.getElementsByClassName('allbox')[0];
+	var m = 0;
+	var timer = setInterval(move,1000)
+
+	function move(){
+		m++;
+		if(m > 4){
+			m = 1;
+			
+		}
+		var now = parseFloat(getcss(allbox,'left'));
+		
+		animate(allbox,(-1*m)*100,now);
+	}
+	function animate(ele,target,now){
+		clearInterval(timer)
+		var speed = (target - now)/40;
+		ele.timer = setInterval(function(){
+			var nm = parseFloat(getcss(ele,'left'));
+			if(nm == target){
+				clearInterval(ele.timer);
+				timer = setInterval(move,1000)
+			}else{
+				ele.style.left = (nm + speed) + 'px';
+			}
+			if(nm == -400){
+				allbox.style.left = 0;
+			}
+			
+		},50)
+	}
+
+
+	function getcss(element,attr){
+		return window.getComputedStyle 
+					? getComputedStyle(element)[attr]
+					: element.currentStyle[attr];
+	}
+
+	</script>
+	<script>
+		$("#show").click(function () {
+		      //var n = $(".nowhx").queue("fx");
+		      $("div").queue("fx", []);
+		      //$("span").text("Queue length is: " + n.length);
+		});
+		function runIt() {
+		      $(".nowhx").show("slow");
+		      $(".nowhx").animate({left:'+=200'},2000);
+		      $(".nowhx").slideToggle(1000);
+		      $(".nowhx").slideToggle("fast");
+		      $(".nowhx").animate({left:'-=200'},1500);
+		      $(".nowhx").hide("slow");
+		      $(".nowhx").show(1200);
+		      $(".nowhx").slideUp("normal", runIt);
+		}
+		runIt();
+	</script>
+</body>
+</html>

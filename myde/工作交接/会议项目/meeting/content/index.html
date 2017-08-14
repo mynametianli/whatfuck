@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>会议主页</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="con_index">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a href="my.html" class="icon icon-me pull-left"></a>
+                <h1 class="title">会议主页</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+            	
+                <!--背景图片-->
+            	<div class="datu">
+                	 <img src="../images/bg01.png" class="bgbgtu ertu" style="display:none" />
+                     <img src="../images/bg02.png" class="bgbgtu ertu" style="display:none" />
+                     <img src="../images/bg03.png" class="bgbgtu ertu" /> 
+                     <img src="../images/bg04.png" class="bgbgtu ertu" style="display:none" /> 
+                     <img src="../images/bg05.png" class="bgbgtu ertu" style="display:none" />  
+                </div>
+                <!--背景图片-->
+            
+                <div class="content-block font75">
+                	<div>
+                    	<div class="font85"><a href="tianqi.html"><span id="local_date"></span><span class="marl" id="local_city"></span><span class="marl" id="local_cond"></span></a></div>
+                    </div>
+                    <div class="martop">
+                    	<div class="row text-center">
+                          <div class="col-33"><a href="wodekapian.html"><img src="../images/001.png" class="tkimg" /><br />我的名片</a></div>
+                          <div class="col-33"><a href="huiyianpai.html"><img src="../images/002.png" class="tkimg" /><br />会议安排</a></div>
+                          <div class="col-33"><a href="huiyiricheng.html"><img src="../images/003.png" class="tkimg" /><br />会议日程</a></div>
+                        </div>
+                    </div>
+                    <div class="martop">
+                    	<div class="row text-center">
+                          <div class="col-33"><a href="VIPserve.html"><img src="../images/004.png" class="tkimg" /><br />VIP服务</a></div>
+                          <div class="col-33"><a href="fenhuichangyuxuan.html"><img src="../images/005.png" class="tkimg" /><br />分会场预选</a></div>
+                          <div class="col-33"><a href="jiudianyuding.html"><img src="../images/006.png" class="tkimg" /><br />酒店预订</a></div>
+                        </div>
+                    </div>
+                    <div class="martop">
+                    	<div class="row text-center">
+                          <div class="col-33"><a href="zhuchirenjieshao.html"><img src="../images/007.png" class="tkimg" /><br />主持人介绍</a></div>
+                          <div class="col-33"><a href="xianchangtiwen.html"><img src="../images/008.png" class="tkimg" /><br />现场提问</a></div>
+                          <div class="col-33"><a href="luntantoupiao.html"><img src="../images/009.png" class="tkimg" /><br />论坛投票</a></div>
+                        </div>
+                    </div>
+                    <div class="martop">
+                    	<div class="row text-center">
+                          <div class="col-33"><a href="yijianfankui.html"><img src="../images/010.png" class="tkimg" /><br />意见反馈</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <!--<script type='text/javascript' src="http://counter.sina.com.cn/ip/" charset="gb2312"></script>-->
+    <!--<script type="text/javascript" src="http://fw.qq.com/ipaddress" charset="gb2312"></script>-->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        var city=returnCitySN["cname"].split("省")[1].slice(0,-1);
+        $.ajax({
+            type:"get",
+            url:"http://apis.baidu.com/heweather/weather/free?&city="+city,
+            data:{},
+            dataType:"JSONP",
+            headers:{
+                    apikey:'0206e5f763789eb569a1d1430ca1330b'
+            },
+            success:function(res){
+                var data=$.parseJSON(res)["HeWeather data service 3.0"][0];
+                var date=data.basic.update.loc.split(" ")[0];
+                $("#local_date").html(date);
+                $("#local_city").html(data.basic.city);
+                $("#local_cond").html(data.now.cond.txt);
+            },
+            error:function(res){
+                console.log("获取天气失败")
+            },
+        })
+    </script>
+    <script type='text/javascript' src='../js/cominit.js'></script>
+  </body>
+</html>

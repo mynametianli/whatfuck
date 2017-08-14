@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>酒店预订</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="hotInfo">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+                <a class="icon icon-share pull-right create-actions"></a>
+                <h1 class="title">酒店预订</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+                <div class="jdul" id="infoCon">
+                    <script id="scrinfo" type="text/html">
+                        <div class="ubb">
+                            <img src="../../images/jdtu.png" class="jdimg2" />
+                            <div class="marlr padtb">{{hotel_name}}</div>
+                        </div>
+                        <div class="ubb">
+                            <div class="marlr padtb1 font75"><a href="jiudiandizhi.html?{{hotCode}}" class="hui1"><img src="../../images/qwt.png" class="smimg" />{{hotel_address}}</a></div>
+                        </div>
+                        {{each room_list as val}}
+                        <div class="ubb">
+                            <div class="marlr padtb1">
+                                <div>{{val.room_type | forRoom}}<strong class="icon icon-down lv1 padl" id="xl"></strong></div>
+                                <div class="font75"><span>会员价</span><span class="marl">{{val.room_price}}元</span><span class="pull-right"><a href="tianxiedd.html?{{val.room_type | forRoom}}&{{val.room_price}}&{{val.rest_amount}}&{{val.room_id}}&{{val.valuable_date_start}}&{{val.valuable_date_end}}" class="button button-fill button-success">预定</a></span></div>
+                                <div class="ubt font65 padtb mart2" id="yc">
+                                    <img src="../../images/jdtu.png" class="jdimg2" />
+                                    <div>床型：{{val.bed_type | forBad}}</div>
+                                    <div>人数：{{val.accept_amount}}</div>
+                                    <div>窗户：{{val.has_window | forWindow}}</div>
+                                    <div>可预定数量：{{val.rest_amount}}</div>
+                                    <div class="text-center"><strong class="icon icon-up lv padl" id="sl"></strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </script>
+
+                    <!--<div class="ubb">-->
+                    	<!--<div class="marlr padtb1">-->
+                        	<!--<div>商务房<strong class="icon icon-down lv1 padl"></strong></div>-->
+                            <!--<div class="font75"><span>会员价<span class="marl">150元</span><span class="pull-right"><a href="#" class="button button-fill button-success">预定</a></span></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/cominit.js"></script>
+
+  </body>
+</html>

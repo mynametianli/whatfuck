@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>会议安排</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+      <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+      <link rel="stylesheet" href="../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="meetArrange">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+  				<a class="icon icon-share pull-right create-actions"></a>
+                <h1 class="title">会议安排</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+                <div class="content-block">
+                	<div><img src="../images/peple.png" class="smimg" /><span class="lan">会议信息</span></div>
+                    <div id="arrCon"></div>
+                    <script type="text/html" id="scrCon">
+                        <div class="linh font75 marl">
+                            <div>会议地点：<span>{{address}}</span></div>
+                            <div>会议地址：<span>{{place}}</span></div>
+                            <div>注册日期：<span>{{reg_time | dateFormat}}</span></div>
+                            <div>会议日期：<span>{{start_time}}</span></div>
+                        </div>
+                        <div><img src="../images/phone.png" class="smimg" /><span class="lv">会议联系</span></div>
+                        <div class="linh font75 marl">
+                            {{each group as val}}
+                                <div id="apRegister">{{val.position}}：<span>{{val.name}}</span><span class="marl">{{val.mobile_phone}}</span></div>
+                            {{/each}}
+                        </div>
+                    </script>
+                    <div><img src="../images/qwt.png" class="smimg" /><span class="lan">区位图</span></div>
+                    <div id="placeMap" style="width: 15rem;height:15rem;margin:10px auto"></div>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DGKqxPOZSSgNmKeQawyVcjtsTKkAIqTT"></script>
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/cominit.js"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>

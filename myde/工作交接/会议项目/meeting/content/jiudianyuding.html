@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>酒店预订</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="orderRoom">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+  				<a href="jiudianyuding/wodedingdan.html" class="icon pull-right create-actions"><span class="font65">我的订单</span></a>
+                <h1 class="title">酒店预订</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+                <div class="jdul" id="hotCon">
+                    <script type="text/html" id="scrjdyd">
+                        {{each content as val}}
+                        <div class="list-block media-list">
+                            <ul>
+                                <li>
+                                    <a href="jiudianyuding/jiudianxx.html?{{val.hotel_id}}" class="item-content">
+                                        <div class="item-media padl"><img src="../images/jdtu.png" class="jdimg" /></div>
+                                        <div class="item-inner">
+                                            <div class="item-title-row">
+                                                <div class="item-title">{{val.hotel_name}}{{val.is_wifi}}</div>
+                                            </div>
+                                            <div class="item-subtitle">
+                                                <div class="pull-left"><img src="../images/wf.png" class="jdimg1 {{val.is_wifi | showTrue}}" /><img src="../images/tc.png" class="jdimg1 {{val.is_park | showTrue}}" /><img src="../images/cy.png" class="jdimg1 {{val.is_restaurant | showTrue}}" /></div>
+                                                {{if val.lowest_price}}
+                                                <div class="pull-right lv1">{{val.lowest_price}}元<span class="font65">起</span></div>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {{/each}}
+                    </script>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/cominit.js"></script>
+  </body>
+</html>

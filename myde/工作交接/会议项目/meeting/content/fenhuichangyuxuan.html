@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>分会场预选</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="fenPlace">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+  				<a class="icon icon-share pull-right create-actions"></a>
+                <h1 class="title">分会场预选</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content">
+                <div class="content-block">
+                    <div id="fenCon"></div>
+                    <script type="text/html" id="scrCon">
+                        <div>此项预选专门用于{{time}}的<span class="lv1">{{title}}</span>，组委会根据各分会场预选人数安排会场。</div>
+                        {{each content as val}}
+                        <div class="martop">
+                            <label class="label-checkbox item-content">
+                                <input type="radio" name="my_radio" meetid="{{val.id}}" id="meet{{val.id}}"/>
+                                <div class="item-media" style="float: left;margin-top: -4px;padding-right: 10px;"><i class="icon icon-form-checkbox"></i></div>
+                                <div class="item-inner">会场{{val.id}}：{{val.meetingplace_title}}</div>
+                            </label>
+                        </div>
+                        <div class="mart1 text-center">
+                            <table class="stable">
+                                <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>主持人</th>
+                                    <th>主题</th>
+                                    <th>主讲人</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{each val.Arrange as value}}
+                                <tr>
+                                    <td>{{value.start_time | dateF}}—{{value.end_time | dateF}}</td>
+                                    <td>{{value.compere}}</td>
+                                    <td>{{value.meeting_title}}</td>
+                                    <td>{{value.lecture}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{/each}}
+                    </script>
+                    <div class="martop"><input type="button" class="button button-success button-big alert-text" id="btnSubmit" value="提交"/></div>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/cominit.js"></script>
+    <!--<script>-->
+	<!-- -->
+		<!--$.init();-->
+		<!--$(function(){-->
+		 <!--$(document).on('click','.alert-text',function () {-->
+			<!--$.alert('提交成功');-->
+		 <!--});-->
+	    <!--})-->
+		<!-- -->
+		<!--$("#gou01").hide();-->
+		<!--$("#radio01").click(function(){-->
+			<!--$("#gou01").show();-->
+			<!--$("#gou02").hide();-->
+			<!--})-->
+		<!--$("#gou02").hide();-->
+		<!--$("#radio02").click(function(){-->
+			<!--$("#gou01").hide();-->
+			<!--$("#gou02").show();-->
+			<!--})-->
+    <!-- -->
+    <!--</script>-->
+
+  </body>
+</html>

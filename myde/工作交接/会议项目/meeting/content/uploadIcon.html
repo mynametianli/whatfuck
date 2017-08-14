@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<div class="page-group">
+    <div class="page bgwhit" id="myFace">
+        <!-- 标题栏 -->
+        <header class="bar bar-nav">
+            <a class="icon icon-left pull-left back"></a>
+            <a class="icon icon-share pull-right create-actions"></a>
+            <h1 class="title">我的头像</h1>
+        </header>
+
+        <!-- 页面内容区 -->
+        <div class="content">
+            <div class="content-block">
+                <div class="text-center">
+                    <img src="../images/img01.png" class="ewm" id="srcImg"/>
+                </div>
+            </div>
+            <div class="ubb">
+                <div class="marlr padtb1">
+                    <input type="file" accept=".jpg,.jpeg,.bmp,.png" id="selectImg" style="opacity: 0; height: 30px; line-height: 30px;"/>
+                    <div style="margin-top:-30px;">从相册中获取一张 <span class="icon icon-right" style="color:#aaa;float: right"></span></div>
+                </div>
+                <div class="marlr padtb1">
+                    <input type="file" accept="image/*;" capture="camera" id="selCamera" style="opacity: 0; height: 30px; line-height: 30px;"/>
+                    <div style="margin-top: -30px;">拍一张照片 <span class="icon icon-right" style="color:#aaa;float: right"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
+<script src="../js/cominit.js"></script>
+</body>
+</html>

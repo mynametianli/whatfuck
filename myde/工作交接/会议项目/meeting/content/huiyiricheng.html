@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>会议日程</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <div class="page bgwhit" id="mSchedule">
+        
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+            	<a class="icon icon-left pull-left back"></a>
+  				<a class="icon icon-share pull-right create-actions"></a>
+                <h1 class="title">会议日程</h1>
+            </header>
+            
+            <!-- 页面内容区 -->
+            <div class="content" id="schCon"></div>
+
+                <script type="text/html" id="scrCon">
+                    {{each content as value}}
+                    <div class="content-block text-center">
+                        <div class="lv1">{{title}}会议<span class="marl">{{value.time | datefor}}</span></div>
+                        <div class="mart1">
+                            <table class="stable">
+                                <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>主持人</th>
+                                    <th>主题</th>
+                                    <th>主讲人</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{each value.cons as val}}
+                                <tr>
+                                    <td>{{val.start_time | dateF}}—{{val.end_time | dateF}}</td>
+                                    <td>{{val.compere}}</td>
+                                    <td>{{val.meeting_title}}</td>
+                                    <td>{{val.lecture}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{/each}}
+                </script>
+
+                    <!--<div class="lv1 mart1">什么什么什么什么会议<span class="marl">某月某日</span></div>-->
+                    <!--<div class="mart1">-->
+                    	<!--<table class="stable">-->
+                          <!--<thead>-->
+                            <!--<tr>-->
+                              <!--<th>时间</th>-->
+                              <!--<th>主持人</th>-->
+                              <!--<th>主题</th>-->
+                              <!--<th>主讲人</th>-->
+                            <!--</tr>-->
+                          <!--</thead>-->
+                          <!--<tbody>-->
+                            <!--<tr>-->
+                              <!--<td>8：00—8：45</td>-->
+                              <!--<td>小王</td>-->
+                              <!--<td>关于一个人的小会</td>-->
+                              <!--<td>大王</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                              <!--<td>9：00—9：45</td>-->
+                              <!--<td></td>-->
+                              <!--<td></td>-->
+                              <!--<td></td>-->
+                            <!--</tr>-->
+                          <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+            
+        </div>
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <!--<script type="text/javascript" src="../js/jquery.cookie.js"></script>-->
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/cominit.js"></script>
+  </body>
+</html>

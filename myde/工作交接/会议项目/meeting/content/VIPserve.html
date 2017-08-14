@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VIP服务</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    
+  </head>
+  <body>
+    <div class="page-group">
+        <!--<div class="page" id="vipContent">-->
+            <div class="page page-current bgwhit" id="vipNone">
+                <!-- 标题栏 -->
+                <header class="bar bar-nav">
+                    <a class="icon icon-left pull-left back"  href="/meeting/content/index.html"></a>
+                    <a href="javascript:;" class="icon pull-right" id="toAddvip"><img src="../images/jiahao.png" class="toptu" /></a>
+                    <h1 class="title">VIP服务</h1>
+                </header>
+                <!-- 页面内容区 -->
+                <div class="content">
+                    <div class="content-block text-center">
+                        <div class="lan">您还没有参与任何VIP服务！</div>
+                    </div>
+                </div>
+            </div>
+            <div class="page bgwhit" id="vipHad">
+                <!-- 标题栏 -->
+                <header class="bar bar-nav">
+                    <a class="icon icon-left pull-left" href="/meeting/content/index.html"></a>
+                    <a class="icon pull-right"></a>
+                    <h1 class="title">VIP服务</h1>
+                </header>
+                <!-- 页面内容区 -->
+                <div class="content">
+                    <!-- 添加后的内容-->
+                    <div class="marlr">
+                        <div class="content-block">
+                            <div class="buttons-row">
+                              <a href="#tab1" class="tab-link button button-big" id="pickOne">接机</a>
+                              <a href="#tab2" class="tab-link button button-big" id="pickTwo">接车</a>
+                            </div>
+                          </div>
+                          <div class="tabs">
+                            <div id="tab1" class="tab">
+                              <div class="content-block">
+                                <span>请正确填写您的真实信息：</span>
+                                <form>
+                                <div class="list-block">
+                                    <ul>
+                                      <!-- Text inputs -->
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">日期</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填" data-toggle='date'/>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">航班</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">联系电话</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">备注</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="非必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                    <div class=" martop"><a href="javascript:;" class="button button-big button-success alert-text" id="pickAir">提交</a></div>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                            <div id="tab2" class="tab">
+                              <div class="content-block">
+                                <span>请正确填写您的真实信息：</span>
+                                <form>
+                                <div class="list-block">
+                                    <ul>
+                                      <!-- Text inputs -->
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">日期</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填"  data-toggle='date'/>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">车次</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">联系电话</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="item-content">
+                                          <div class="item-inner">
+                                            <div class="item-title label">备注</div>
+                                            <div class="item-input">
+                                              <input type="text" placeholder="非必填">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                    <div class=" martop"><a href="javascript:;" class="button button-big button-success alert-text" id="pickCar">提交</a></div>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        <!--</div>-->
+    </div>
+
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/cominit.js"></script>
+
+  </body>
+</html>
